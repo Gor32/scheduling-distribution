@@ -1,0 +1,14 @@
+.semesters-cell {
+    background-color: #e4e3ec;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.modules-cell {
+    background-color: #decdda;
+    font-weight: bold;
+}
+.lecturesTime-cell {
+    background-color: #a0c7da;
+    font-weight: bold;
+}
