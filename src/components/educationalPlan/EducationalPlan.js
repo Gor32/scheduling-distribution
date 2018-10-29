@@ -3,12 +3,12 @@ import { AgGridReact } from 'ag-grid-react'
 
 import 'ag-grid-community/dist/styles/ag-grid.css'
 import 'ag-grid-community/dist/styles/ag-theme-balham.css'
+import './educationalPlan.style.css'
 
 import 'ag-grid-enterprise'
 
-import './educationalPlan.style.css'
-
 import * as helper from './educationalPlan.helper'
+import Fetcher from '../../lib/api'
 
 class EducationalPlan extends Component {
   constructor (props) {
@@ -18,11 +18,20 @@ class EducationalPlan extends Component {
       rowData: helper.rowData,
       rowSelection: 'multiple',
       getRowHeight: helper.getRowHeight,
+      addedRow: []
     }
   }
 
   onGridReady (params) {
+    this.gridApi = params.api
     params.api.sizeColumnsToFit()
+  }
+
+  componentDidMount () {
+    Fetcher.getEducationalRows()
+      .then(res => res.json())
+      .then(addedRow => this.setState({addedRow}, () => console.log(addedRow)))
+      .then(() => this.gridApi.updateRowData({add: [...this.state.addedRow]}))
   }
 
   render () {

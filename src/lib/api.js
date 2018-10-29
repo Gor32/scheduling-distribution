@@ -16,6 +16,11 @@ class Fetcher {
 
     return fetch(url, {...options, body, headers, method}).then(jsonify)
   }
+
+  getEducationalRows = () => {
+    const url = `${ENDPOINTS.GET_ALL_EDUCATIONAL_PLAN}`
+    return fetch(url)
+  }
 }
 
 export default new Fetcher()
