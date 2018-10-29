@@ -6,7 +6,7 @@ const EducationalPlan = require('../models/educationalPlanSchema')
 
 router.get('/', (req, res, next) => {
   EducationalPlan.find().exec().then(docs => {
-    console.log("Router.get running")
+    console.log('Router.get running')
     console.log(docs)
     //   if (docs.length >= 0) {
     res.status(200).json(docs)
@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  console.log("router.post is running")
+  console.log('router.post is running')
   const educationalPlan =
     new EducationalPlan({
       _id: new mongoose.Types.ObjectId(),
