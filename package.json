@@ -1,0 +1,58 @@
+{
+  "name": "scheduling-distribution",
+  "version": "1.0.0",
+  "description": "scheduling distribution diploma work for NPUA",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gor32/scheduling-distribution.git"
+  },
+  "contributors": [
+    {
+      "name": "Gor Kirakosyan",
+      "email": "kirakosyan0001@gmail.com"
+    }
+  ],
+  "keywords": [
+    "NPUA",
+    "scheduling",
+    "shceduling",
+    "distribution",
+    "diploma",
+    "work",
+    "diploma"
+  ],
+  "author": "Gor Kirakosyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gor32/scheduling-distribution/issues"
+  },
+  "homepage": "https://github.com/Gor32/scheduling-distribution#readme",
+  "dependencies": {
+    "ag-grid-community": "19.0.0",
+    "ag-grid-enterprise": "19.0.0",
+    "ag-grid-react": "19.0.0",
+    "body-parser": "1.18.3",
+    "express": "4.16.4",
+    "http": "0.0.0",
+    "mongoose": "5.3.7",
+    "morgan": "1.9.1",
+    "nodemon": "1.18.5",
+    "promise": "8.0.2",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "react-scripts": "2.0.5"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
