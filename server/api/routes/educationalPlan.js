@@ -43,7 +43,7 @@ router.post('/', (req, res, next) => {
     console.log(result)
     res.status(201).json({
       message: 'Handling POST requests to /products',
-      createdProduct: result,
+      createdRow: result,
     })
   }).catch(err => {
     console.log(err)
