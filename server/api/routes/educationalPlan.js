@@ -42,7 +42,7 @@ router.post('/', (req, res, next) => {
   educationalPlan.save().then(result => {
     console.log(result)
     res.status(201).json({
-      message: 'Handling POST requests to /products',
+      message: 'Handling POST requests to /educationalPlan',
       createdRow: result,
     })
   }).catch(err => {
