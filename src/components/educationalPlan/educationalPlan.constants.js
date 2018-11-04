@@ -81,11 +81,13 @@ export const rowData = [
   {
     section: 'semesters',
     semester1: 'Կիսամյակներ',
-    digit: 'Մոդուլներ / դասընթացներ'
+    digit: 'Մոդուլներ / դասընթացներ',
+    cantRemove: true
   },
   {
     section: 'modules',
-    digit: 'Ընդհանուր կրթության կառուցամաս'
+    digit: 'Ընդհանուր կրթության կառուցամաս',
+    cantRemove: true
   },
   {
     section: 'lecturesTime',
@@ -97,7 +99,8 @@ export const rowData = [
     semester5: 0,
     semester6: 0,
     semester7: 0,
-    semester8: 0
+    semester8: 0,
+    cantRemove: true
   }
 ]
 

@@ -45,7 +45,11 @@ class EducationalPlan extends Component {
     Fetcher.getEducationalRows()
       .then(res => res.json())
       .then(addedRow => this.setState({addedRow}))
-      .then(() => this.gridApi.updateRowData({add: [...this.state.addedRow]}))
+      .then(() => {
+        this.gridApi.updateRowData({add: [...this.state.addedRow]})
+        this.state.addedRow.forEach(r => this.calculateSemestersNodeWithoutAdditionalData(r))
+        this.gridApi.updateRowData({})
+      })
   }
 
   handledTextChange = column => {
@@ -67,15 +71,22 @@ class EducationalPlan extends Component {
   onAddRow = () => {
     const newItem = this.createNewRowData()
     this.addRowInState(newItem.row)
-    this.calculateSemestersRow(newItem)
+    this.calculateSemestersNodeWithAdditionalData(newItem)
     this.gridApi.updateRowData({add: [newItem.row]})
   }
 
-  calculateSemestersRow = item => {
+  calculateSemestersNodeWithAdditionalData = item => {
     const rowData = this.state.rowData.slice()
     Object.values(SEMESTERS)
       .forEach((semester) =>
-        rowData[2][semester] += helper.calculateSemesters(item.row[semester], item, semester) || 0)
+        rowData[2][semester] += helper.calculateSemestersWithAdditionalData(item.row[semester], item, semester) || 0)
+  }
+
+  calculateSemestersNodeWithoutAdditionalData = item => {
+    const rowData = this.state.rowData.slice()
+    Object.values(SEMESTERS)
+      .forEach((semester) =>
+        rowData[2][semester] += helper.calculateSemestersWithoutAdditionalData(item[semester], item, semester) || 0)
   }
 
   addRowInState = row => {
@@ -86,9 +97,9 @@ class EducationalPlan extends Component {
   }
 
   onRemoveSelected = () => {
-    const selectedData = this.gridApi.getSelectedRows()
+    const selectedData = this.gridApi.getSelectedRows().filter(row=>row.cantRemove !== true)
     const gridApiRows = this.gridApi.updateRowData({remove: selectedData})
-
+    console.log(selectedData)
     this.chooseData(gridApiRows.remove)
     this.removingData()
   }
@@ -125,17 +136,29 @@ class EducationalPlan extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '50px',
+        paddingTop: '5px',
         boxSizing: 'border-box'
       }}
       >
+        <div>
+          {
+            Object.keys(COLUMN)
+              .map(row => (<input type="text" placeholder={COLUMN[row]}
+                                  onChange={this.handledTextChange(COLUMN[row])}/>))
+          }
+          <button onClick={this.onAddRow}>Add Row</button>
+          <hr/>
+          <button onClick={this.onRemoveSelected}>Remove Selected</button>
+        </div>
         <div
           className="ag-theme-balham"
           style={{
             height: '500px',
-            width: '100'
+            width: '100',
+            paddingTop: '50px'
           }}
         >
+          <h2>Ուսումնական Պլան</h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}
@@ -148,17 +171,6 @@ class EducationalPlan extends Component {
             onGridReady={this.onGridReady}
           >
           </AgGridReact>
-          <div style={{position: 'absolute', top: '0px', left: '0px'}}>
-            <div>
-              <button onClick={this.onRemoveSelected.bind(this)}>Remove Selected</button>
-              {
-                Object.keys(COLUMN)
-                  .map(row => (<input type="text" placeholder={COLUMN[row]}
-                                      onChange={this.handledTextChange(COLUMN[row])}/>))
-              }
-              <button onClick={this.onAddRow.bind(this)}>Add Row</button>
-            </div>
-          </div>
         </div>
       </div>
     )
