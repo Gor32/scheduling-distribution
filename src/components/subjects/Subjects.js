@@ -8,7 +8,12 @@ import 'ag-grid-enterprise'
 
 import * as helper from './subjects.helper'
 
-import { COLUMN, VALUES } from './subjects.constants'
+import {
+  OK,
+  COLUMN,
+  VALUES,
+  ENDING_CAPTIONS_INDEX
+} from './subjects.constants'
 import Fetcher from '../../lib/api'
 
 class Subjects extends Component {
@@ -19,7 +24,8 @@ class Subjects extends Component {
       rowData: [],
       rowSelection: 'multiple',
       values: {...VALUES},
-      addedRow: []
+      addedRow: [],
+      removedRows: []
     }
   }
 
@@ -60,8 +66,44 @@ class Subjects extends Component {
     Fetcher.subjects.createSubjectsRow(row)
       .then(r => {
         this.state.addedRow.push(r.createdRow)
-        console.log(this.state)
+        row._id = r.createdRow._id
       })
+  }
+
+  onRemoveSelected = () => {
+    const selectedData = this.gridApi.getSelectedRows()
+    const gridApiRows = this.gridApi.updateRowData({remove: selectedData})
+    console.log(gridApiRows)
+    this.chooseData(gridApiRows.remove)
+    this.removingData()
+  }
+
+  removingData = () => {
+    const realRemoved = []
+    this.state.removedRows
+      .forEach(row =>
+        Fetcher.subjects.removeSubjectsRow(row.data._id).then(r => {
+          if (r.ok === OK) {
+            realRemoved.push(row.data._id)
+          }
+          console.log(realRemoved)
+        }).then(() => {
+          this.filterAddedAndRemovedState(realRemoved)
+        }))
+  }
+
+  filterAddedAndRemovedState = row => {
+    const addedRow = this.state.addedRow.filter(r => row.indexOf(r._id) === -1)
+    const removedRows = this.state.removedRows.filter(r => row.indexOf(r.data._id) === -1)
+    this.setState({addedRow, removedRows})
+  }
+
+  chooseData = removedRows => {
+    removedRows.forEach(rowNode => {
+      if (rowNode.rowIndex > ENDING_CAPTIONS_INDEX) {
+        this.state.removedRows.push(rowNode)
+      }
+    })
   }
 
   render () {
@@ -75,12 +117,12 @@ class Subjects extends Component {
         <div>
           {
             Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]}
+              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
                                   onChange={this.handledTextChange(COLUMN[row])}/>))
           }
           <button onClick={this.onAddRow}>Add Row</button>
           <hr/>
-          <button>Remove Selected</button>
+          <button onClick={this.onRemoveSelected}>Remove Selected</button>
         </div>
         <div
           className="ag-theme-balham"

@@ -8,6 +8,7 @@ export const ENDPOINTS = {
   REMOVE_EDUCATIONAL_ROW: `${API_PATH}/educationalPlan`,
 
   GET_ALL_SUBJECTS: `${API_PATH}/subjects`,
-  CREATE_SUBJECTS_ROW: `${API_PATH}/subjects`
+  CREATE_SUBJECTS_ROW: `${API_PATH}/subjects`,
+  REMOVE_SUBJECTS_ROW: `${API_PATH}/subjects`
 }
 
