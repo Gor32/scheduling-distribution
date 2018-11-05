@@ -23,7 +23,7 @@ class EducationalPlan extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      columnDefs: helper.getCoulmnDefs(),
+      columnDefs: helper.getColumnDefs(),
       rowData: helper.getRowData(),
       rowSelection: 'multiple',
       getRowHeight: helper.getRowHeight,
@@ -45,7 +45,7 @@ class EducationalPlan extends Component {
       .then(addedRow => this.setState({addedRow}))
       .then(() => {
         this.gridApi.updateRowData({add: [...this.state.addedRow]})
-        this.state.addedRow.forEach(r => this.calculateSemestersNodeWithoutAdditionalData(r))
+        this.state.addedRow.forEach(r => this.calculateSemestersNodeWithoutAdditionalData(r, true))
         this.gridApi.updateRowData({})
       })
   }
@@ -69,28 +69,29 @@ class EducationalPlan extends Component {
   onAddRow = () => {
     const newItem = this.createNewRowData()
     this.addRowInState(newItem.row)
-    this.calculateSemestersNodeWithAdditionalData(newItem)
+    this.calculateSemestersNodeWithAdditionalData(newItem, true)
     this.gridApi.updateRowData({add: [newItem.row]})
   }
 
-  calculateSemestersNodeWithAdditionalData = item => {
+  calculateSemestersNodeWithAdditionalData = (item, isPlus) => {
     const rowData = this.state.rowData.slice()
     Object.values(SEMESTERS)
       .forEach((semester) =>
-        rowData[2][semester] += helper.calculateSemestersWithAdditionalData(item.row[semester], item, semester) || 0)
+        rowData[2][semester] += helper.calculateSemestersWithAdditionalData(item.row[semester], item, semester, isPlus) || 0)
   }
 
-  calculateSemestersNodeWithoutAdditionalData = item => {
+  calculateSemestersNodeWithoutAdditionalData = (item, isPlus) => {
     const rowData = this.state.rowData.slice()
     Object.values(SEMESTERS)
       .forEach((semester) =>
-        rowData[2][semester] += helper.calculateSemestersWithoutAdditionalData(item[semester], item, semester) || 0)
+        rowData[2][semester] += helper.calculateSemestersWithoutAdditionalData(item[semester], item, semester, isPlus) || 0)
   }
 
   addRowInState = row => {
     Fetcher.educationalData.createEducationalRow(row)
       .then(r => {
         this.state.addedRow.push(r.createdRow)
+        row._id = r.createdRow._id
       })
   }
 
@@ -109,9 +110,11 @@ class EducationalPlan extends Component {
         Fetcher.educationalData.removeEducationalRow(row.data._id).then(r => {
           if (r.ok === OK) {
             realRemoved.push(row.data._id)
+            this.calculateSemestersNodeWithoutAdditionalData(row.data, false)
           }
         }).then(() => {
           this.filterAddedAndRemovedState(realRemoved)
+          this.gridApi.updateRowData({})
         }))
   }
 
@@ -141,7 +144,7 @@ class EducationalPlan extends Component {
         <div>
           {
             Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]}
+              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
                                   onChange={this.handledTextChange(COLUMN[row])}/>))
           }
           <button onClick={this.onAddRow}>Add Row</button>
