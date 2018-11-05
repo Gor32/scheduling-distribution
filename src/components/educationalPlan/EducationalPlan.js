@@ -10,8 +10,6 @@ import 'ag-grid-enterprise'
 import * as helper from './educationalPlan.helper'
 
 import {
-  rowData,
-  columnDefs,
   OK,
   COLUMN,
   VALUES,
@@ -25,8 +23,8 @@ class EducationalPlan extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      columnDefs: columnDefs,
-      rowData: rowData,
+      columnDefs: helper.getCoulmnDefs(),
+      rowData: helper.getRowData(),
       rowSelection: 'multiple',
       getRowHeight: helper.getRowHeight,
       values: {...VALUES},
@@ -42,7 +40,7 @@ class EducationalPlan extends Component {
   }
 
   getEducationalRows = () => {
-    Fetcher.getEducationalRows()
+    Fetcher.educationalData.getEducationalRows()
       .then(res => res.json())
       .then(addedRow => this.setState({addedRow}))
       .then(() => {
@@ -90,14 +88,14 @@ class EducationalPlan extends Component {
   }
 
   addRowInState = row => {
-    Fetcher.createEducationalRow(row)
+    Fetcher.educationalData.createEducationalRow(row)
       .then(r => {
         this.state.addedRow.push(r.createdRow)
       })
   }
 
   onRemoveSelected = () => {
-    const selectedData = this.gridApi.getSelectedRows().filter(row=>row.cantRemove !== true)
+    const selectedData = this.gridApi.getSelectedRows().filter(row => row.cantRemove !== true)
     const gridApiRows = this.gridApi.updateRowData({remove: selectedData})
     console.log(selectedData)
     this.chooseData(gridApiRows.remove)
@@ -108,7 +106,7 @@ class EducationalPlan extends Component {
     const realRemoved = []
     this.state.removedRows
       .forEach(row =>
-        Fetcher.removeEducationalRow(row.data._id).then(r => {
+        Fetcher.educationalData.removeEducationalRow(row.data._id).then(r => {
           if (r.ok === OK) {
             realRemoved.push(row.data._id)
           }

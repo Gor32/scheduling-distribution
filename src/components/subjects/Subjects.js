@@ -8,22 +8,34 @@ import 'ag-grid-enterprise'
 
 import * as helper from './subjects.helper'
 
-import { columnDefs, COLUMN, VALUES } from './subjects.constants'
+import { COLUMN, VALUES } from './subjects.constants'
+import Fetcher from '../../lib/api'
 
 class Subjects extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      columnDefs: columnDefs,
+      columnDefs: helper.getColumnDefs(),
       rowData: [],
       rowSelection: 'multiple',
       values: {...VALUES},
+      addedRow: []
     }
   }
 
   onGridReady = params => {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
+    this.getEducationalRows()
+  }
+
+  getEducationalRows = () => {
+    Fetcher.subjects.getSubjectsRows()
+      .then(res => res.json())
+      .then(addedRow => this.setState({addedRow}))
+      .then(() => {
+        this.gridApi.updateRowData({add: [...this.state.addedRow]})
+      })
   }
 
   handledTextChange = column => {
@@ -40,7 +52,16 @@ class Subjects extends Component {
 
   onAddRow = () => {
     const newItem = this.createNewRowData()
+    this.addRowInState(newItem)
     this.gridApi.updateRowData({add: [newItem]})
+  }
+
+  addRowInState = row => {
+    Fetcher.subjects.createSubjectsRow(row)
+      .then(r => {
+        this.state.addedRow.push(r.createdRow)
+        console.log(this.state)
+      })
   }
 
   render () {

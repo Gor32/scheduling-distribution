@@ -1,3 +1,5 @@
+import { columnDefs, rowData } from './educationalPlan.constants'
+
 function isFirstRow (params) {
   return params.data.section === 'semesters'
 }
@@ -76,4 +78,12 @@ function calculateSemesters (semester, newItem, column, isAdditionalData) {
 
 export function calculateSemestersWithoutAdditionalData (semester, newItem, column) {
   return calculateSemesters(semester, newItem, column, false)
+}
+
+export function getRowData () {
+  return rowData.map(row => {return {...row}})
+}
+
+export function getCoulmnDefs(){
+  return columnDefs.map(row=>{return {...row}})
 }
