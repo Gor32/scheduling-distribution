@@ -6,4 +6,6 @@ router.get('/', lib.getSubjects)
 
 router.post('/', lib.addSubjects)
 
+router.delete('/:subjectId', lib.deleteSubjectsById)
+
 module.exports = router
