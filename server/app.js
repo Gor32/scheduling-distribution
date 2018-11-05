@@ -4,7 +4,8 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
-const educationalPlanRoutes = require('./api/routes/educationalPlan')
+const educationalPlanRoutes = require('./api/routes/routes.educationalPlan')
+const subjectsRoutes = require('./api/routes/routes.subjects')
 
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true})
 app.use(morgan('dev'))
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/educationalPlan', educationalPlanRoutes)
+app.use('/subjects', subjectsRoutes)
 
 app.use((req, res, next) => {
   const error = new Error('Not found')
