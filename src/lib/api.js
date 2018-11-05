@@ -1,35 +1,9 @@
-import { jsonify } from '../util/index'
-import { ENDPOINTS } from '../config'
-
-const options = {
-  credentials: 'same-origin'
-}
+import EducationalDataFetcher from './api.educationalRow'
+import SubjectsFetcher from './api.subjects'
 
 class Fetcher {
-  createEducationalRow = landingPage => {
-    const url = `${ENDPOINTS.CREATE_EDUCATIONAL_ROW}`
-    const body = JSON.stringify({
-      ...landingPage
-    })
-    const headers = {'Content-Type': 'application/json'}
-    const method = 'POST'
-
-    return fetch(url, {...options, body, headers, method}).then(jsonify)
-  }
-
-  getEducationalRows = () => {
-    const url = `${ENDPOINTS.GET_ALL_EDUCATIONAL_PLAN}`
-    return fetch(url)
-  }
-
-  removeEducationalRow = rowId => {
-    const url = `${ENDPOINTS.REMOVE_EDUCATIONAL_ROW}/${rowId}`
-    console.log(url,"   " ,rowId)
-    const headers = {'Content-Type': 'application/json'}
-    const method = 'DELETE'
-    const body = JSON.stringify({})
-    return fetch(url, {...options, body, headers, method}).then(jsonify)
-  }
+  educationalData = EducationalDataFetcher
+  subjects = SubjectsFetcher
 }
 
 export default new Fetcher()
