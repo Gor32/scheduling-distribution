@@ -6,17 +6,17 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 
 import 'ag-grid-enterprise'
 
-import * as helper from './subjects.helper'
+import * as helper from './chairs.helper'
 
 import {
   OK,
   COLUMN,
   VALUES,
   ENDING_CAPTIONS_INDEX
-} from './subjects.constants'
+} from './chairs.constants'
 import Fetcher from '../../lib/api'
 
-class Subjects extends Component {
+class Chairs extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -32,11 +32,11 @@ class Subjects extends Component {
   onGridReady = params => {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
-    this.getSubjectsRows()
+    this.getChairsRows()
   }
 
-  getSubjectsRows = () => {
-    Fetcher.subjects.getSubjectsRows()
+  getChairsRows = () => {
+    Fetcher.chairs.getChairsRows()
       .then(res => res.json())
       .then(addedRow => this.setState({addedRow}))
       .then(() => {
@@ -63,7 +63,7 @@ class Subjects extends Component {
   }
 
   addRowInState = row => {
-    Fetcher.subjects.createSubjectsRow(row)
+    Fetcher.chairs.createChairsRow(row)
       .then(r => {
         this.state.addedRow.push(r.createdRow)
         row._id = r.createdRow._id
@@ -82,7 +82,7 @@ class Subjects extends Component {
     const realRemoved = []
     this.state.removedRows
       .forEach(row =>
-        Fetcher.subjects.removeSubjectsRow(row.data._id).then(r => {
+        Fetcher.chairs.removeChairsRow(row.data._id).then(r => {
           if (r.ok === OK) {
             realRemoved.push(row.data._id)
           }
@@ -150,4 +150,4 @@ class Subjects extends Component {
   }
 }
 
-export default Subjects
+export default Chairs
