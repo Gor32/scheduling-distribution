@@ -48,6 +48,6 @@ function createChair (body) {
   return new Chairs({
     _id: new mongoose.Types.ObjectId(),
     code: body.code,
-    chairs: body.chairs
+    chair: body.chair
   })
 }

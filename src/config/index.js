@@ -9,6 +9,10 @@ export const ENDPOINTS = {
 
   GET_ALL_SUBJECTS: `${API_PATH}/subjects`,
   CREATE_SUBJECTS_ROW: `${API_PATH}/subjects`,
-  REMOVE_SUBJECTS_ROW: `${API_PATH}/subjects`
+  REMOVE_SUBJECTS_ROW: `${API_PATH}/subjects`,
+
+  GET_ALL_CHAIRS: `${API_PATH}/chairs`,
+  CREATE_CHAIRS_ROW: `${API_PATH}/chairs`,
+  REMOVE_CHAIRS_ROW: `${API_PATH}/chairs`
 }
 
