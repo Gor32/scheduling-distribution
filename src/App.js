@@ -7,6 +7,7 @@ import EducationalPlan from './components/educationalPlan/EducationalPlan'
 import Home from './components/home/Home'
 import Subjects from './components/subjects/Subjects'
 import Chairs from './components/chairs/Chairs'
+import Streams from './components/streams/Streams'
 
 class App extends Component {
   render () {
@@ -18,13 +19,20 @@ class App extends Component {
               <Link to="/">Home </Link>
             </li>
             <li>
-              <Link to="/educationalPlan">Educational PLan</Link>
+              <Link to="/educationalPlan">Ուսումնական պլան </Link>
+              {/*Educational PLan*/}
             </li>
             <li>
-              <Link to="/subjects">Subjects</Link>
+              <Link to="/subjects">Առարկաներ</Link>
+              {/*Subjects*/}
             </li>
             <li>
-              <Link to="/chairs">Chairs</Link>
+              <Link to="/chairs">Ամբիոններ</Link>
+              {/*Chairs*/}
+            </li>
+            <li>
+              <Link to="/streams">Հոսքեր</Link>
+              {/*Streams*/}
             </li>
           </ul>
           <hr/>
@@ -32,6 +40,7 @@ class App extends Component {
           <Route path='/educationalPlan' component={EducationalPlan}/>
           <Route path='/subjects' component={Subjects}/>
           <Route path='/chairs' component={Chairs}/>
+          <Route path='/streams' component={Streams}/>
         </div>
       </Router>
     )
