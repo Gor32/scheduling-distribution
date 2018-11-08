@@ -8,7 +8,13 @@ import 'ag-grid-enterprise'
 
 import * as helper from './classifiers.helper'
 import GroupRowInnerRendererForClassifiers from '../groupRowInnerRendererForClassifiers/groupRowInnerRendererForClassifiers'
-import { COLUMN, VALUES } from './classifiers.constants'
+import {
+  OK,
+  COLUMN,
+  VALUES,
+  ENDING_CAPTIONS_INDEX
+} from './classifiers.constants'
+import Fetcher from '../../lib/api'
 
 class Classifiers extends Component {
   constructor (props) {
@@ -20,26 +26,9 @@ class Classifiers extends Component {
       groupRowInnerRenderer:'groupRowInnerRenderer',
       rowSelection: 'multiple',
       values: {...VALUES},
+      addedRow: [],
+      removedRows: []
     }
-  }
-
-  createNewRowData = () => {
-    return {...this.state.values}
-  }
-
-  onGridReady = (params) => {
-    this.gridApi = params.api
-    params.api.sizeColumnsToFit()
-  }
-
-  onAddRow = () => {
-    const newItem = this.createNewRowData()
-    this.gridApi.updateRowData({add: [newItem]})
-  }
-
-  onRemoveSelected = () => {
-    const selectedData = this.gridApi.getSelectedRows()
-    this.gridApi.updateRowData({remove: selectedData})
   }
 
   handledTextChange = column => {
@@ -50,6 +39,75 @@ class Classifiers extends Component {
       console.log(values)
     }
   }
+
+  createNewRowData = () => {
+    return {...this.state.values}
+  }
+
+  onGridReady = (params) => {
+    this.gridApi = params.api
+    params.api.sizeColumnsToFit()
+    this.getClassifiersRows()
+  }
+
+  getClassifiersRows = () => {
+    Fetcher.classifiers.getClassifiersRows()
+      .then(res => res.json())
+      .then(addedRow => this.setState({addedRow}))
+      .then(() => {
+        this.gridApi.updateRowData({add: [...this.state.addedRow]})
+      })
+  }
+  onAddRow = () => {
+    const newItem = this.createNewRowData()
+    this.addRowInState(newItem)
+    this.gridApi.updateRowData({add: [newItem]})
+  }
+
+  addRowInState = row => {
+    Fetcher.classifiers.createClassifiersRow(row)
+      .then(r => {
+        this.state.addedRow.push(r.createdRow)
+        row._id = r.createdRow._id
+      })
+  }
+
+  onRemoveSelected = () => {
+    const selectedData = this.gridApi.getSelectedRows()
+    const gridApiRows=this.gridApi.updateRowData({remove: selectedData})
+    console.log(gridApiRows)
+    this.chooseData(gridApiRows.remove)
+    this.removingData()
+  }
+
+  removingData = () => {
+    const realRemoved = []
+    this.state.removedRows
+      .forEach(row =>
+        Fetcher.classifiers.removeClassifiersRow(row.data._id).then(r => {
+          if (r.ok === OK) {
+            realRemoved.push(row.data._id)
+          }
+          console.log(realRemoved)
+        }).then(() => {ß
+          this.filterAddedAndRemovedState(realRemoved)
+        }))
+  }
+
+  filterAddedAndRemovedState = row => {
+    const addedRow = this.state.addedRow.filter(r => row.indexOf(r._id) === -1)
+    const removedRows = this.state.removedRows.filter(r => row.indexOf(r.data._id) === -1)
+    this.setState({addedRow, removedRows})
+  }
+
+  chooseData = removedRows => {
+    removedRows.forEach(rowNode => {
+      if (rowNode.rowIndex > ENDING_CAPTIONS_INDEX) {
+        this.state.removedRows.push(rowNode)
+      }
+    })
+  }
+
 
   render () {
     return (
