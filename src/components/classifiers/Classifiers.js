@@ -6,24 +6,20 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 
 import 'ag-grid-enterprise'
 
-import * as helper from './streams.helper'
-import GroupRowInnerRendererForStreams from '../groupRowInnerRendererForStreams/groupRowInnerRendererForStreams'
-import { COLUMN, VALUES } from './streams.constants'
-import { getCount } from './streams.helper'
+import * as helper from './classifiers.helper'
+import GroupRowInnerRendererForClassifiers from '../groupRowInnerRendererForClassifiers/groupRowInnerRendererForClassifiers'
+import { COLUMN, VALUES } from './classifiers.constants'
 
-class Streams extends Component {
+class Classifiers extends Component {
   constructor (props) {
     super(props)
     this.state = {
       columnDefs: helper.getColumnDefs(),
       rowData: [],
-      frameworkComponents: {groupRowInnerRenderer: GroupRowInnerRendererForStreams},
-      groupRowInnerRenderer: 'groupRowInnerRenderer',
+      frameworkComponents:{groupRowInnerRenderer: GroupRowInnerRendererForClassifiers},
+      groupRowInnerRenderer:'groupRowInnerRenderer',
       rowSelection: 'multiple',
-      aggFuncs: {
-        count: getCount
-      },
-      values: {...VALUES}
+      values: {...VALUES},
     }
   }
 
@@ -34,7 +30,6 @@ class Streams extends Component {
   onGridReady = (params) => {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
-    params.api.addAggFunc('getCount', getCount)
   }
 
   onAddRow = () => {
@@ -50,12 +45,7 @@ class Streams extends Component {
   handledTextChange = column => {
     return (e) => {
       const values = this.state.values
-      if (column === COLUMN.NUMBER_OF_STUDENTS) {
-        values[column] = Number(e.target.value)
-      }
-      else {
-        values[column] = e.target.value
-      }
+      values[column] = e.target.value
       this.setState({values})
       console.log(values)
     }
@@ -79,6 +69,7 @@ class Streams extends Component {
           <hr/>
           <button onClick={this.onRemoveSelected}>Remove Selected</button>
         </div>
+
         <div
           className="ag-theme-balham"
           style={{
@@ -87,7 +78,7 @@ class Streams extends Component {
             paddingTop: '50px'
           }}
         >
-          <h2>Հոսքեր</h2>
+          <h2>Դասիչներ</h2>
           <AgGridReact
             enableSorting={true}
             columnDefs={this.state.columnDefs}
@@ -102,7 +93,6 @@ class Streams extends Component {
             rowSelection={this.state.rowSelection}
             rowData={this.state.rowData}
 
-            aggFuncs={this.state.aggFuncs}
             enableGroupEdit={true}>
           </AgGridReact>
         </div>
@@ -111,4 +101,4 @@ class Streams extends Component {
   }
 }
 
-export default Streams
+export default Classifiers
