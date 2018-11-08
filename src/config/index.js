@@ -13,6 +13,10 @@ export const ENDPOINTS = {
 
   GET_ALL_CHAIRS: `${API_PATH}/chairs`,
   CREATE_CHAIRS_ROW: `${API_PATH}/chairs`,
-  REMOVE_CHAIRS_ROW: `${API_PATH}/chairs`
+  REMOVE_CHAIRS_ROW: `${API_PATH}/chairs`,
+
+  GET_ALL_CLASSIFIERS: `${API_PATH}/classifiers`,
+  CREATE_CLASSIFIERS_ROW: `${API_PATH}/classifiers`,
+  REMOVE_CLASSIFIERS_ROW: `${API_PATH}/classifiers`,
 }
 
