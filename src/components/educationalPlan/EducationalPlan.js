@@ -15,7 +15,8 @@ import {
   COLUMN,
   VALUES,
   SEMESTERS,
-  ENDING_CAPTIONS_INDEX,
+  COLUMN_INPUT,
+  ENDING_CAPTIONS_INDEX
 } from './educationalPlan.constants'
 
 import Fetcher from '../../lib/api'
@@ -32,18 +33,31 @@ class EducationalPlan extends Component {
       addedRow: [],
       removedRows: [],
       classifiers: [],
-      selectedClassifier: EMPTY
+      selectedClassifier: EMPTY,
+      courses: []
     }
   }
 
   onGridReady = params => {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
+    this.getClassifiers()
+    this.getCourses()
+    //this.getEducationalRows()
+  }
+
+  getCourses = () => {
+    Fetcher.subjects.getSubjectsRows()
+      .then(res => res.json())
+      .then(courses => this.setState({courses}))
+      .then(() => {console.log(this.state.courses)})
+  }
+
+  getClassifiers = () => {
     Fetcher.classifiers.getDistinctClassifiersRows()
       .then(res => res.json())
       .then(classifiers => this.setState({classifiers}))
       .then(() => {console.log(this.state.classifiers)})
-    //this.getEducationalRows()
   }
 
   getEducationalRows = classifier => {
@@ -60,9 +74,27 @@ class EducationalPlan extends Component {
   handledTextChange = column => {
     return (e) => {
       const values = this.state.values
-      values[column] = e.target.value
+      if (column === COLUMN.COURSES) {
+        this.textChangeCourses(e.target.value, values)
+      }
+      else {
+        values[column] = e.target.value
+      }
+
       this.setState({values})
       console.log(values)
+    }
+  }
+
+  textChangeCourses = (value, values) => {
+    if (value !== EMPTY) {
+      const row = this.state.courses[value]
+      values[COLUMN.COURSES] = row.subject
+      // values[COLUMN.DIGIT] = row.digit
+    }
+    else {
+      values[COLUMN.COURSES] = ''
+      // values[COLUMN.DIGIT] = ''
     }
   }
 
@@ -174,10 +206,16 @@ class EducationalPlan extends Component {
       }}
       >
         <div>
+          <select name="selectingCourses" id="selectCoursesID" onChange={this.handledTextChange(COLUMN.COURSES)}>
+            <option value={EMPTY}>{'Առարկա, ամբիոնի կոդ'}</option>
+            {this.state.courses.map((row, index) => (
+              <option value={index} key={row.digit}>{' ' + row.subject + ', ' + row.chair}</option>))}
+          </select>
+
           {
-            Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
-                                  onChange={this.handledTextChange(COLUMN[row])}/>))
+            Object.keys(COLUMN_INPUT)
+              .map(row => (<input type="text" placeholder={COLUMN_INPUT[row]} key={COLUMN_INPUT[row]}
+                                  onChange={this.handledTextChange(COLUMN_INPUT[row])}/>))
           }
           <button onClick={this.onAddRow}>Add Row</button>
           <hr/>

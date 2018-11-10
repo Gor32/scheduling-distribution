@@ -22,10 +22,14 @@ export const SEMESTERS = {
   SEMESTER8: 'semester8'
 }
 
-export const COLUMN = {
+export const COLUMN_INPUT = {
   DIGIT: 'digit',
-  COURSES: 'courses',
   ...SEMESTERS
+}
+
+export const COLUMN = {
+  COURSES: 'courses',
+  ...COLUMN_INPUT
 }
 
 export const VALUES = Object.values(COLUMN).reduce((p, c) => ({...p, [c]: ''}), {})
