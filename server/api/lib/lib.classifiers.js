@@ -44,6 +44,19 @@ exports.getClassifiers = function (req, res, next) {
   })
 }
 
+exports.getClassifiersDistinct = function (req, res, next) {
+  Classifiers.distinct('classifier').exec().then(docs => {
+    console.log('Router.get running')
+    console.log(docs)
+    res.status(200).json(docs)
+  }).catch(err => {
+    console.log(err)
+    res.status(500).json({
+      error: err,
+    })
+  })
+}
+
 function createClassifier (body) {
   return new Classifiers({
     _id: new mongoose.Types.ObjectId(),

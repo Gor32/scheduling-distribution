@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const educationalPlanSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  classifier: String,
   digit: String,
   courses: String,
   semester1: String,

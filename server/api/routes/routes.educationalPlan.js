@@ -3,7 +3,8 @@ const router = express.Router()
 const lib = require('../lib/lib.educationalPlan')
 
 router.get('/', lib.getEducationalPlan)
-router.get('/:educationalPlanId', lib.getEducationalPlanById)
+
+router.get('/:educationalPlanClassifier', lib.getEducationalPlanByClassifier)
 
 router.post('/', lib.addEducationalPlan)
 

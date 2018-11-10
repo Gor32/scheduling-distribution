@@ -49,9 +49,9 @@ exports.getEducationalPlan = function (req, res, next) {
   })
 }
 
-exports.getEducationalPlanById = function (req, res, next) {
-  const id = req.params.educationalPlanId
-  EducationalPlan.findById(id).exec().then(doc => {
+exports.getEducationalPlanByClassifier = function (req, res, next) {
+  const classifier = req.params.educationalPlanClassifier
+  EducationalPlan.find().where('classifier').equals(classifier).exec().then(doc => {
     console.log('From database', doc)
     if (doc) {
       res.status(200).json(doc)
@@ -67,6 +67,7 @@ exports.getEducationalPlanById = function (req, res, next) {
 function createEducationalPLan (body) {
   return new EducationalPlan({
     _id: new mongoose.Types.ObjectId(),
+    classifier: body.classifier,
     digit: body.digit,
     courses: body.courses,
     semester1: body.semester1,
@@ -76,6 +77,6 @@ function createEducationalPLan (body) {
     semester5: body.semester5,
     semester6: body.semester6,
     semester7: body.semester7,
-    semester8: body.semester8
+    semester8: body.semester8,
   })
 }
