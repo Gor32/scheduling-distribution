@@ -130,7 +130,7 @@ class Chairs extends Component {
             paddingTop: '50px'
           }}
         >
-          <h2>Առարկաներ</h2>
+          <h2>Ամբիոններ</h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}

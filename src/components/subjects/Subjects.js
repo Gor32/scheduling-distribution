@@ -12,9 +12,11 @@ import {
   OK,
   COLUMN,
   VALUES,
+  COLUMN_INPUT,
   ENDING_CAPTIONS_INDEX
 } from './subjects.constants'
 import Fetcher from '../../lib/api'
+import { EMPTY } from '../educationalPlan/educationalPlan.constants'
 
 class Subjects extends Component {
   constructor (props) {
@@ -25,7 +27,9 @@ class Subjects extends Component {
       rowSelection: 'multiple',
       values: {...VALUES},
       addedRow: [],
-      removedRows: []
+      removedRows: [],
+      chairs: [],
+      selectedChair: EMPTY
     }
   }
 
@@ -33,6 +37,14 @@ class Subjects extends Component {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
     this.getSubjectsRows()
+    this.getChairs()
+  }
+
+  getChairs = () => {
+    Fetcher.chairs.getChairsRows()
+      .then(res => res.json())
+      .then(chairs => this.setState({chairs}))
+      .then(() => {console.log(this.state.chairs)})
   }
 
   getSubjectsRows = () => {
@@ -113,10 +125,16 @@ class Subjects extends Component {
         boxSizing: 'border-box'
       }}>
         <div>
+          <select name="selecting" id="selectID" style={{width: '20%'}} onChange={this.handledTextChange(COLUMN.CHAIR)}>
+            <option value={EMPTY}>{'Ամբիոնի կոդ, ամբիոն'}</option>
+            {this.state.chairs.map(row => (
+              <option value={row.code} key={row.code}>{'Ամբիոնի կոդ ' + row.code + ', ամբիոն ' + row.chair}</option>))}
+          </select>
+
           {
-            Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
-                                  onChange={this.handledTextChange(COLUMN[row])}/>))
+            Object.keys(COLUMN_INPUT)
+              .map(row => (<input type="text" placeholder={COLUMN_INPUT[row]} key={COLUMN_INPUT[row]}
+                                  onChange={this.handledTextChange(COLUMN_INPUT[row])}/>))
           }
           <button onClick={this.onAddRow}>Add Row</button>
           <hr/>

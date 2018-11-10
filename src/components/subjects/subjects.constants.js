@@ -1,9 +1,19 @@
-export const COLUMN = {
+export const COLUMN_INPUT = {
   DIGIT: 'digit',
   SUBJECT: 'subject'
 }
 
+export const COLUMN = {
+  CHAIR: 'chair',
+  ...COLUMN_INPUT
+}
+
 export const columnDefs = [
+  {
+    headerName: 'Ա. կոդ',
+    width: 13,
+    field: COLUMN.CHAIR
+  },
   {
     headerName: 'Թվանիշ',
     width: 20,
