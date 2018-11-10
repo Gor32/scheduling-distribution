@@ -47,6 +47,7 @@ exports.getSubjects = function (req, res, next) {
 function createSubject (body) {
   return new Subjects({
     _id: new mongoose.Types.ObjectId(),
+    chair: body.chair,
     digit: body.digit,
     subject: body.subject
   })
