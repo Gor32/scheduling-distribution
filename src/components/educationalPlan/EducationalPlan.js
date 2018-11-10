@@ -11,6 +11,7 @@ import * as helper from './educationalPlan.helper'
 
 import {
   OK,
+  EMPTY,
   COLUMN,
   VALUES,
   SEMESTERS,
@@ -29,18 +30,24 @@ class EducationalPlan extends Component {
       getRowHeight: helper.getRowHeight,
       values: {...VALUES},
       addedRow: [],
-      removedRows: []
+      removedRows: [],
+      classifiers: [],
+      selectedClassifier: EMPTY
     }
   }
 
   onGridReady = params => {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
-    this.getEducationalRows()
+    Fetcher.classifiers.getDistinctClassifiersRows()
+      .then(res => res.json())
+      .then(classifiers => this.setState({classifiers}))
+      .then(() => {console.log(this.state.classifiers)})
+    //this.getEducationalRows()
   }
 
-  getEducationalRows = () => {
-    Fetcher.educationalData.getEducationalRows()
+  getEducationalRows = classifier => {
+    Fetcher.educationalData.getEducationalRowsByClassifier(classifier)
       .then(res => res.json())
       .then(addedRow => this.setState({addedRow}))
       .then(() => {
@@ -57,6 +64,32 @@ class EducationalPlan extends Component {
       this.setState({values})
       console.log(values)
     }
+  }
+
+  handledSelectChange = e => {
+    this.setState({selectedClassifier: e.target.value})
+    const selectedData = this.getAllRows()
+    this.gridApi.updateRowData({remove: selectedData})
+    this.selectedClassifierAddedDataToGrid(e.target.value)
+  }
+
+  selectedClassifierAddedDataToGrid = value => {
+    if (value !== EMPTY) {
+      const rowData = this.state.rowData.slice()
+      Object.values(SEMESTERS)
+        .forEach((semester) =>
+          rowData[2][semester] = 0)
+      this.getEducationalRows(value)
+    }
+  }
+
+  getAllRows = () => {
+    let rowData = []
+    this.gridApi.forEachNode((node, index) => {
+      if (index > ENDING_CAPTIONS_INDEX)
+        rowData.push(node.data)
+    })
+    return rowData
   }
 
   createNewRowData = () => {
@@ -88,7 +121,7 @@ class EducationalPlan extends Component {
   }
 
   addRowInState = row => {
-    Fetcher.educationalData.createEducationalRow(row)
+    Fetcher.educationalData.createEducationalRow({...row, classifier: this.state.selectedClassifier})
       .then(r => {
         this.state.addedRow.push(r.createdRow)
         row._id = r.createdRow._id
@@ -98,7 +131,6 @@ class EducationalPlan extends Component {
   onRemoveSelected = () => {
     const selectedData = this.gridApi.getSelectedRows().filter(row => row.cantRemove !== true)
     const gridApiRows = this.gridApi.updateRowData({remove: selectedData})
-    console.log(selectedData)
     this.chooseData(gridApiRows.remove)
     this.removingData()
   }
@@ -159,7 +191,13 @@ class EducationalPlan extends Component {
             paddingTop: '50px'
           }}
         >
-          <h2>Ուսումնական Պլան</h2>
+          <h2>Ուսումնական Պլան դասիչ
+            <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
+              <option value={EMPTY}/>
+              {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
+            </select>
+
+          </h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}

@@ -23,6 +23,12 @@ class ClassifiersFetcher {
     return fetch(url)
   }
 
+  getDistinctClassifiersRows = () => {
+    const url = `${ENDPOINTS.GET_ALL_DISTINCT_CLASSIFIERS}`
+    return fetch(url)
+  }
+
+
   removeClassifiersRow = rowId => {
     const url = `${ENDPOINTS.REMOVE_CLASSIFIERS_ROW}/${rowId}`
     console.log(url, '   ', rowId)

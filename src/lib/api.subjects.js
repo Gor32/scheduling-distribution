@@ -25,7 +25,6 @@ class SubjectsFetcher {
 
   removeSubjectsRow = rowId => {
     const url = `${ENDPOINTS.REMOVE_SUBJECTS_ROW}/${rowId}`
-    console.log(url, '   ', rowId)
     const headers = {'Content-Type': 'application/json'}
     const method = 'DELETE'
     const body = JSON.stringify({})

@@ -23,13 +23,17 @@ class EducationalDataFetcher {
     return fetch(url)
   }
 
+  getEducationalRowsByClassifier = classifier => {
+    const url = `${ENDPOINTS.GET_EDUCATIONAL_PLAN_BY_CLASSIFIER}/${classifier}`
+    return fetch(url)
+  }
   removeEducationalRow = rowId => {
     const url = `${ENDPOINTS.REMOVE_EDUCATIONAL_ROW}/${rowId}`
-    console.log(url, '   ', rowId)
     const headers = {'Content-Type': 'application/json'}
     const method = 'DELETE'
     const body = JSON.stringify({})
     return fetch(url, {...options, body, headers, method}).then(jsonify)
   }
 }
+
 export default new EducationalDataFetcher()

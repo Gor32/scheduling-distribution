@@ -7,7 +7,8 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
 
 import * as helper from './classifiers.helper'
-import GroupRowInnerRendererForClassifiers from '../groupRowInnerRendererForClassifiers/groupRowInnerRendererForClassifiers'
+import GroupRowInnerRendererForClassifiers
+  from '../groupRowInnerRendererForClassifiers/groupRowInnerRendererForClassifiers'
 import {
   OK,
   COLUMN,
@@ -22,8 +23,8 @@ class Classifiers extends Component {
     this.state = {
       columnDefs: helper.getColumnDefs(),
       rowData: [],
-      frameworkComponents:{groupRowInnerRenderer: GroupRowInnerRendererForClassifiers},
-      groupRowInnerRenderer:'groupRowInnerRenderer',
+      frameworkComponents: {groupRowInnerRenderer: GroupRowInnerRendererForClassifiers},
+      groupRowInnerRenderer: 'groupRowInnerRenderer',
       rowSelection: 'multiple',
       values: {...VALUES},
       addedRow: [],
@@ -74,8 +75,7 @@ class Classifiers extends Component {
 
   onRemoveSelected = () => {
     const selectedData = this.gridApi.getSelectedRows()
-    const gridApiRows=this.gridApi.updateRowData({remove: selectedData})
-    console.log(gridApiRows)
+    const gridApiRows = this.gridApi.updateRowData({remove: selectedData})
     this.chooseData(gridApiRows.remove)
     this.removingData()
   }
@@ -88,8 +88,7 @@ class Classifiers extends Component {
           if (r.ok === OK) {
             realRemoved.push(row.data._id)
           }
-          console.log(realRemoved)
-        }).then(() => {ß
+        }).then(() => {
           this.filterAddedAndRemovedState(realRemoved)
         }))
   }
@@ -107,7 +106,6 @@ class Classifiers extends Component {
       }
     })
   }
-
 
   render () {
     return (

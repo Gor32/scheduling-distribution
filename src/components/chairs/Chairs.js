@@ -73,7 +73,6 @@ class Chairs extends Component {
   onRemoveSelected = () => {
     const selectedData = this.gridApi.getSelectedRows()
     const gridApiRows = this.gridApi.updateRowData({remove: selectedData})
-    console.log(gridApiRows)
     this.chooseData(gridApiRows.remove)
     this.removingData()
   }
@@ -86,7 +85,6 @@ class Chairs extends Component {
           if (r.ok === OK) {
             realRemoved.push(row.data._id)
           }
-          console.log(realRemoved)
         }).then(() => {
           this.filterAddedAndRemovedState(realRemoved)
         }))

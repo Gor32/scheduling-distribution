@@ -106,3 +106,5 @@ export const rowData = [
 
 export const ENDING_CAPTIONS_INDEX = 2
 export const OK = 1
+
+export const EMPTY = "empty"
