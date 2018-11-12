@@ -90,11 +90,11 @@ class EducationalPlan extends Component {
     if (value !== EMPTY) {
       const row = this.state.courses[value]
       values[COLUMN.COURSES] = row.subject
-      // values[COLUMN.DIGIT] = row.digit
+      values[COLUMN.DIGIT] = row.chair + '.' + row.digit
     }
     else {
       values[COLUMN.COURSES] = ''
-      // values[COLUMN.DIGIT] = ''
+      values[COLUMN.DIGIT] = ''
     }
   }
 
@@ -215,7 +215,7 @@ class EducationalPlan extends Component {
           {
             Object.keys(COLUMN_INPUT)
               .map(row => (<input type="text" placeholder={COLUMN_INPUT[row]} key={COLUMN_INPUT[row]}
-                                  onChange={this.handledTextChange(COLUMN_INPUT[row])}/>))
+                                  defaultValue={this.state.values[COLUMN_INPUT[row]]} onChange={this.handledTextChange(COLUMN_INPUT[row])}/>))
           }
           <button onClick={this.onAddRow}>Add Row</button>
           <hr/>
