@@ -9,6 +9,7 @@ import Subjects from './components/subjects/Subjects'
 import Chairs from './components/chairs/Chairs'
 import Streams from './components/streams/Streams'
 import Classifiers from './components/classifiers/Classifiers'
+import GroupPlan from './components/groupPlan/GroupPlan'
 
 class App extends Component {
   render () {
@@ -39,6 +40,9 @@ class App extends Component {
               <Link to="/classifiers">Դասիչներ</Link>
               {/*Classifiers*/}
             </li>
+            <li>
+              <Link to="/groupPlan">Group Plan </Link>
+            </li>
           </ul>
           <hr/>
           <Route exact path='/' component={Home}/>
@@ -47,6 +51,8 @@ class App extends Component {
           <Route path='/chairs' component={Chairs}/>
           <Route path='/streams' component={Streams}/>
           <Route path='/classifiers' component={Classifiers}/>
+          <Route path='/groupPlan' component={GroupPlan}/>
+
         </div>
       </Router>
     )
