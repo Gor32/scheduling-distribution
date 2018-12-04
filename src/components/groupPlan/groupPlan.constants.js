@@ -4,14 +4,16 @@ export const COLUMN = {
   WEEKEND_TIME1: 'weekendTime1',
   LECTURE1: 'lecture1',
   PRACTICAL1: 'practical1',
+  LAB1: 'lab1',
   EXAMINATION1: 'examination1',
   TESTING1: 'testing1',
 
-  WEEKEND_TIME2: 'weekendTime1',
-  LECTURE2: 'lecture1',
-  PRACTICAL2: 'practical1',
-  EXAMINATION2: 'examination1',
-  TESTING2: 'testing1',
+  WEEKEND_TIME2: 'weekendTime2',
+  LECTURE2: 'lecture2',
+  PRACTICAL2: 'practical2',
+  LAB2: 'lab1',
+  EXAMINATION2: 'examination2',
+  TESTING2: 'testing2',
 
   CHAIR: 'chair'
 }
@@ -41,6 +43,10 @@ export const columnDefs = [
         field: COLUMN.PRACTICAL1
       },
       {
+        headerName: 'լաբ',
+        field: COLUMN.LAB1
+      },
+      {
         headerName: 'քնն',
         field: COLUMN.EXAMINATION1
       },
@@ -66,6 +72,10 @@ export const columnDefs = [
         field: COLUMN.PRACTICAL2
       },
       {
+        headerName: 'լաբ',
+        field: COLUMN.LAB2
+      },
+      {
         headerName: 'քնն',
         field: COLUMN.EXAMINATION2
       },
@@ -83,3 +93,5 @@ export const columnDefs = [
     }]
   }
 ]
+
+export const VALUES = Object.values(COLUMN).reduce((p, c) => ({...p, [c]: ''}), {})
