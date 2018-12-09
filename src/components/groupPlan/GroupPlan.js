@@ -38,19 +38,10 @@ class GroupPlan extends Component {
 
   handledSelectChange = e => {
     this.setState({selectedClassifier: e.target.value})
+
     const selectedData = this.getAllRows()
     this.gridApi.updateRowData({remove: selectedData})
     helper.getEducationalPlan(e.target.value)
-      .then(rowData => {
-          this.gridApi.updateRowData({add: [...rowData]})
-        }
-      )
-  }
-
-  handledSelectZeroChange = e => {
-    const selectedData = this.getAllRows()
-    this.gridApi.updateRowData({remove: selectedData})
-    helper.getEducationalPlan(this.state.selectedClassifier)
       .then(rowData => {
           rowData.forEach(row => {
             if (this.state.selectedShowZero) {
@@ -58,11 +49,29 @@ class GroupPlan extends Component {
             } else {
               helper.changeRowAfterSelectZero(row, '', 0)
             }
-            console.log(row)
           })
           this.gridApi.updateRowData({add: [...rowData]})
         }
       )
+  }
+
+  handledSelectZeroChange = e => {
+    if (this.state.selectedClassifier !== '') {
+      const selectedData = this.getAllRows()
+      this.gridApi.updateRowData({remove: selectedData})
+      helper.getEducationalPlan(this.state.selectedClassifier)
+        .then(rowData => {
+            rowData.forEach(row => {
+              if (this.state.selectedShowZero) {
+                helper.changeRowAfterSelectZero(row, 0, '')
+              } else {
+                helper.changeRowAfterSelectZero(row, '', 0)
+              }
+            })
+            this.gridApi.updateRowData({add: [...rowData]})
+          }
+        )
+    }
     this.setState({selectedShowZero: !this.state.selectedShowZero})
   }
 

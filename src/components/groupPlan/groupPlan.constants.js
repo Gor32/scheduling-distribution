@@ -7,13 +7,15 @@ export const COLUMN = {
   LAB1: 'lab1',
   EXAMINATION1: 'examination1',
   TESTING1: 'testing1',
+  COURSE1: 'course1',
 
   WEEKEND_TIME2: 'weekendTime2',
   LECTURE2: 'lecture2',
   PRACTICAL2: 'practical2',
-  LAB2: 'lab1',
+  LAB2: 'lab2',
   EXAMINATION2: 'examination2',
   TESTING2: 'testing2',
+  COURSE2: 'course2',
 
   CHAIR: 'chair'
 }
@@ -47,6 +49,10 @@ export const columnDefs = [
         field: COLUMN.LAB1
       },
       {
+        headerName: 'կուր',
+        field: COLUMN.COURSE1
+      },
+      {
         headerName: 'քնն',
         field: COLUMN.EXAMINATION1
       },
@@ -76,6 +82,10 @@ export const columnDefs = [
         field: COLUMN.LAB2
       },
       {
+        headerName: 'կուր',
+        field: COLUMN.COURSE2
+      },
+      {
         headerName: 'քնն',
         field: COLUMN.EXAMINATION2
       },
@@ -89,6 +99,7 @@ export const columnDefs = [
     headerName: '',
     children: [{
       headerName: 'ամբիոն',
+      width: 250,
       field: COLUMN.CHAIR
     }]
   }
