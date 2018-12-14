@@ -1,3 +1,5 @@
+import * as helper from './groupPlan.helper'
+
 export const COLUMN = {
   SUBJECT: 'subject',
 
@@ -26,7 +28,8 @@ export const columnDefs = [
     children: [{
       headerName: 'առարկա',
       field: COLUMN.SUBJECT,
-      width: 1000
+      width: 1000,
+      colSpan: helper.groupInfo
     }]
   },
   {
