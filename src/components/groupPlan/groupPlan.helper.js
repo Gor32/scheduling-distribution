@@ -24,10 +24,12 @@ function getGroupByClassifier (classifier) {
 
 function convertDataToGroupPlan (rows, groups) {
   let results = []
-  groups.forEach(group=>{
+  groups.forEach(group => {
+    const course = Math.abs(Number(group[0]) - 9)
+    results.push({section: 'group', subject: group + ' կուրս ' + course})
     results = results.concat(rows.map(row => {
       let values = {}
-      const val = calculateSemesters(row, group)
+      const val = calculateSemesters(row, course)
 
       values[COLUMN.LECTURE1] = val[COLUMN.LECTURE1]
       values[COLUMN.TESTING1] = val[COLUMN.TESTING1]
@@ -77,14 +79,14 @@ function validation (row) {
   if (!(row[COLUMN.LAB2] === '' || row[COLUMN.LAB2] === 0)) {
     return true
   }
-  if (!(row[COLUMN.COURSE2] === '')) {
+  if (row[COLUMN.COURSE2] !== '') {
     return true
   }
 
   return false
 }
 
-function calculateSemesters (row, group) {
+function calculateSemesters (row, course) {
 
   let values = {}
 
@@ -101,42 +103,53 @@ function calculateSemesters (row, group) {
   values[COLUMN.COURSE2] = ''
   values[COLUMN.COURSE1] = ''
 
-  if (true) {
-    const splittingValues = row[educationalPlanConstants.SEMESTERS.SEMESTER1].split(':')
-    if (splittingValues.length > 2) {
-      values[COLUMN.LECTURE1] = Number(splittingValues[0])
-      values[COLUMN.PRACTICAL1] = Number(splittingValues[1])
-      values[COLUMN.LAB1] = Number(splittingValues[2])
-      values[COLUMN.WEEKEND_TIME1] = Number(splittingValues.reduce(getSum))
-      if (splittingValues.length > 3) {
-        values[COLUMN.EXAMINATION1] = 'Ք'
-      } else {
-        values[COLUMN.TESTING1] = 'Ս'
-      }
-    } else {
-      if (splittingValues.length > 0 && splittingValues[0] !== '')
-        values[COLUMN.COURSE1] = 'Կ'
-    }
+  let splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER1].split(':')
+  let splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER2].split(':')
+  switch (course) {
+    case 2:
+      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER3].split(':')
+      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER4].split(':')
+      break
+    case 3:
+      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER5].split(':')
+      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER6].split(':')
+      break
+    case 4:
+      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER7].split(':')
+      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER8].split(':')
+      break
   }
 
-  if (true) {
-    const splittingValues = row[educationalPlanConstants.SEMESTERS.SEMESTER2].split(':')
-    if (splittingValues.length > 2) {
-      values[COLUMN.LECTURE2] = Number(splittingValues[0])
-      values[COLUMN.PRACTICAL2] = Number(splittingValues[1])
-      values[COLUMN.LAB2] = Number(splittingValues[2])
-      values[COLUMN.WEEKEND_TIME2] = splittingValues.reduce(getSum)
-      if (splittingValues.length > 3) {
-        values[COLUMN.EXAMINATION2] = 'Ք'
-      }
-      else {
-        values[COLUMN.TESTING2] = 'Ս'
-      }
+  if (splittingValues1.length > 2) {
+    values[COLUMN.LECTURE1] = Number(splittingValues1[0])
+    values[COLUMN.PRACTICAL1] = Number(splittingValues1[1])
+    values[COLUMN.LAB1] = Number(splittingValues1[2])
+    values[COLUMN.WEEKEND_TIME1] = Number(splittingValues1.reduce(getSum))
+    if (splittingValues1.length > 3) {
+      values[COLUMN.EXAMINATION1] = 'Ք'
+    } else {
+      values[COLUMN.TESTING1] = 'Ս'
+    }
+  } else {
+    if (splittingValues1.length > 0 && splittingValues1[0] !== '')
+      values[COLUMN.COURSE1] = 'Կ'
+  }
+
+  if (splittingValues2.length > 2) {
+    values[COLUMN.LECTURE2] = Number(splittingValues2[0])
+    values[COLUMN.PRACTICAL2] = Number(splittingValues2[1])
+    values[COLUMN.LAB2] = Number(splittingValues2[2])
+    values[COLUMN.WEEKEND_TIME2] = splittingValues2.reduce(getSum)
+    if (splittingValues2.length > 3) {
+      values[COLUMN.EXAMINATION2] = 'Ք'
     }
     else {
-      if (splittingValues.length > 0 && splittingValues[0] !== '')
-        values[COLUMN.COURSE2] = 'Կ'
+      values[COLUMN.TESTING2] = 'Ս'
     }
+  }
+  else {
+    if (splittingValues2.length > 0 && splittingValues2[0] !== '')
+      values[COLUMN.COURSE2] = 'Կ'
   }
 
   return values
@@ -181,3 +194,9 @@ export function changeRowAfterSelectZero (row, changeFrom, changeTo) {
 
 }
 
+export function groupInfo (params) {
+  if (params.data.section === 'group') {
+    return 16
+  }
+  return 1
+}
