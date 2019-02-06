@@ -28,7 +28,7 @@ export const columnDefs = [
     children: [{
       headerName: 'առարկա',
       field: COLUMN.SUBJECT,
-      width: 1000,
+      width: 500,
       colSpan: helper.groupInfo
     }]
   },
