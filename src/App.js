@@ -10,7 +10,7 @@ import Chairs from './components/chairs/Chairs'
 import Streams from './components/streams/Streams'
 import Classifiers from './components/classifiers/Classifiers'
 import GroupPlan from './components/groupPlan/GroupPlan'
-
+import LoadChair from './components/loadChair/LoadChair'
 class App extends Component {
    w3_open = () => {
     document.getElementById("main").style.marginLeft = "10%";
@@ -32,23 +32,25 @@ class App extends Component {
     return (
       <Router>
         <div  >
-          <div class="w3-sidebar w3-bar-block w3-animate-left" style={{display:'none','z-index':5}} id="mySidebar">
-          <button class="w3-bar-item w3-button w3-large" onClick={this.w3_close}>Close &times;</button>
+          <div class="w3-sidebar w3-bar-block w3-animate-left " style={{display:'none','z-index':5}} id="mySidebar">
+          <button class="w3-bar-item w3-button w3-large w3-blue-gray" onClick={this.w3_close}>Փակել &times;</button>
             <Link to="/" class="w3-bar-item w3-button">Home </Link>
             <Link to="/educationalPlan" class="w3-bar-item w3-button">Ուսումնական պլան </Link>
             <Link to="/subjects" class="w3-bar-item w3-button">Առարկաներ</Link>
             <Link to="/chairs" class="w3-bar-item w3-button">Ամբիոններ</Link>
             <Link to="/streams" class="w3-bar-item w3-button">Հոսքեր</Link>
             <Link to="/classifiers" class="w3-bar-item w3-button">Դասիչներ</Link>
-            <Link to="/groupPlan" class="w3-bar-item w3-button">Group Plan </Link>
+            <Link to="/groupPlan" class="w3-bar-item w3-button">Խմբային պլան</Link>
+            <Link to="/loadChair" class="w3-bar-item w3-button">Ամբիոնի բեռնվածք</Link>
           </div>    
           
             <div class="w3-overlay w3-animate-opacity" onClick={this.w3_close} style={{cursor:'pointer'}} 
           id="myOverlay"></div>
                     <hr/>
             <div id="main">
-            <button id="openNav" class="w3-button w3-teal w3-xlarge" onClick={this.w3_open}>&#9776;</button>
+            <button id="openNav" class="w3-button w3-blue-gray w3-xlarge" onClick={this.w3_open}>&#9776;</button>
                 <div class="w3-container" className="App">
+                
                 <Route exact path='/' component={Home}/>
                 <Route path='/educationalPlan' component={EducationalPlan}/>
                 <Route path='/subjects' component={Subjects}/>
@@ -56,6 +58,7 @@ class App extends Component {
                 <Route path='/streams' component={Streams}/>
                 <Route path='/classifiers' component={Classifiers}/>
                 <Route path='/groupPlan' component={GroupPlan}/>
+                <Route path='/loadChair' component={LoadChair}/>
                 </div>    
             </div> 
 
