@@ -118,6 +118,7 @@ function calculateSemesters (row, course) {
       splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER7].split(':')
       splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER8].split(':')
       break
+    default:
   }
 
   if (splittingValues1.length > 2) {

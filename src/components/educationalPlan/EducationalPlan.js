@@ -233,13 +233,12 @@ class EducationalPlan extends Component {
             paddingTop: '50px'
           }}
         >
-          <h2>Ուսումնական Պլան դասիչ
+          <h4>Ուսումնական Պլան դասիչ
             <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
               <option value={EMPTY}/>
               {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
             </select>
-
-          </h2>
+          </h4>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
