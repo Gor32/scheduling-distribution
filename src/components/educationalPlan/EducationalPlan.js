@@ -34,7 +34,11 @@ class EducationalPlan extends Component {
       removedRows: [],
       classifiers: [],
       selectedClassifier: EMPTY,
-      courses: []
+      courses: [],
+      defaultColDef: {
+        sortable: true,
+        filter: true
+      },
     }
   }
 
@@ -238,6 +242,7 @@ class EducationalPlan extends Component {
           </h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
+            defaultColDef={this.state.defaultColDef}
             animateRows={true}
             enableColResize={true}
             rowData={this.state.rowData}
