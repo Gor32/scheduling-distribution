@@ -10,6 +10,8 @@ import * as helper from './streams.helper'
 import GroupRowInnerRendererForStreams from '../groupRowInnerRendererForStreams/groupRowInnerRendererForStreams'
 import { COLUMN, VALUES } from './streams.constants'
 import { getCount } from './streams.helper'
+import { EMPTY } from '../educationalPlan/educationalPlan.constants'
+import Fetcher from '../../lib/api'
 
 class Streams extends Component {
   constructor (props) {
@@ -17,6 +19,9 @@ class Streams extends Component {
     this.state = {
       columnDefs: helper.getColumnDefs(),
       rowData: [],
+      classifiers: [],
+      groups: [],
+      selectedClassifier: '',
       frameworkComponents: {groupRowInnerRenderer: GroupRowInnerRendererForStreams},
       groupRowInnerRenderer: 'groupRowInnerRenderer',
       rowSelection: 'multiple',
@@ -31,10 +36,18 @@ class Streams extends Component {
     return {...this.state.values}
   }
 
+  getClassifiers = () => {
+    Fetcher.classifiers.getDistinctClassifiersRows()
+      .then(res => res.json())
+      .then(classifiers => this.setState({classifiers}))
+      .then(() => {console.log(this.state.classifiers)})
+  }
+
   onGridReady = (params) => {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
     params.api.addAggFunc('getCount', getCount)
+    this.getClassifiers()
   }
 
   onAddRow = () => {
@@ -59,6 +72,17 @@ class Streams extends Component {
       this.setState({values})
       console.log(values)
     }
+  }
+
+  handledSelectChange = e => {
+    this.setState(
+      {selectedClassifier: e.target.value},
+      () =>
+        Fetcher.classifiers.getClassifierGroups(this.state.selectedClassifier)
+          .then(res => res.json())
+          .then(res => res.map(r=>r.group))
+          .then(groups => this.setState({groups}))
+    )
   }
 
   render () {
@@ -87,6 +111,19 @@ class Streams extends Component {
             paddingTop: '50px'
           }}
         >
+          <h4>Ուսումնական Պլան դասիչ
+            <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
+              <option value={EMPTY}/>
+              {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
+            </select>
+          </h4>
+          <h4>
+            <select name="groupSelecting" id="groupSelectId" onChange={null}>
+              <option value={EMPTY}/>
+              {this.state.groups.map(row => (<option value={row} key={row+this.state.classifiers}>{row}</option>))}
+            </select>
+          </h4>
+
           <h2>Հոսքեր</h2>
           <AgGridReact
             enableSorting={true}

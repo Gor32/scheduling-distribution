@@ -7,7 +7,7 @@ const options = {
 
 class ClassifiersFetcher {
 
-  createClassifiersRow = classifiersRow =>{
+  createClassifiersRow = classifiersRow => {
     const url = `${ENDPOINTS.CREATE_CLASSIFIERS_ROW}`
     const body = JSON.stringify({
       ...classifiersRow
@@ -28,6 +28,10 @@ class ClassifiersFetcher {
     return fetch(url)
   }
 
+  getClassifierGroups = classifier => {
+    const url = `${ENDPOINTS.GET_CLASSIFIER_GROUPS}/${classifier}`
+    return fetch(url)
+  }
 
   removeClassifiersRow = rowId => {
     const url = `${ENDPOINTS.REMOVE_CLASSIFIERS_ROW}/${rowId}`

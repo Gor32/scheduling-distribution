@@ -17,6 +17,7 @@ export const ENDPOINTS = {
   REMOVE_CHAIRS_ROW: `${API_PATH}/chairs`,
 
   GET_ALL_CLASSIFIERS: `${API_PATH}/classifiers`,
+  GET_CLASSIFIER_GROUPS: `${API_PATH}/classifiers`,
   GET_ALL_DISTINCT_CLASSIFIERS: `${API_PATH}/classifiers/distinctClassifiers`,
   CREATE_CLASSIFIERS_ROW: `${API_PATH}/classifiers`,
   REMOVE_CLASSIFIERS_ROW: `${API_PATH}/classifiers`,
