@@ -6,6 +6,8 @@ router.get('/', lib.getClassifiers)
 
 router.get('/distinctClassifiers', lib.getClassifiersDistinct)
 
+router.get('/:classifier', lib.getClassifierGroups)
+
 router.post('/', lib.addClassifiers)
 
 router.delete('/:classifierId', lib.deleteClassifiersById)
