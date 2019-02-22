@@ -21,5 +21,9 @@ export const ENDPOINTS = {
   GET_ALL_DISTINCT_CLASSIFIERS: `${API_PATH}/classifiers/distinctClassifiers`,
   CREATE_CLASSIFIERS_ROW: `${API_PATH}/classifiers`,
   REMOVE_CLASSIFIERS_ROW: `${API_PATH}/classifiers`,
+
+  GET_ALL_STREAMS: `${API_PATH}/streams`,
+  CREATE_STREAMS_ROW: `${API_PATH}/streams`,
+  REMOVE_STREAMS_ROW: `${API_PATH}/streams`,
 }
 
