@@ -74,6 +74,7 @@ function createClassifier (body) {
   return new Classifiers({
     _id: new mongoose.Types.ObjectId(),
     classifier: body.classifier,
-    group: body.group
+    group: body.group,
+    numberOfStudents: body.numberOfStudents,
   })
 }
