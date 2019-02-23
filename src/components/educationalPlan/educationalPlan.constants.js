@@ -29,6 +29,7 @@ export const COLUMN_INPUT = {
 
 export const COLUMN = {
   COURSES: 'courses',
+  COURSES_ID: 'coursesId',
   ...COLUMN_INPUT
 }
 

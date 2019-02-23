@@ -95,10 +95,12 @@ class EducationalPlan extends Component {
       const row = this.state.courses[value]
       values[COLUMN.COURSES] = row.subject
       values[COLUMN.DIGIT] = row.chair + '.' + row.digit
+      values[COLUMN.COURSES_ID] = row._id
     }
     else {
       values[COLUMN.COURSES] = ''
       values[COLUMN.DIGIT] = ''
+      values[COLUMN.COURSES_ID] = ''
     }
   }
 
