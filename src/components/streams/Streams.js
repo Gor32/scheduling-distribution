@@ -137,7 +137,6 @@ class Streams extends Component {
       () =>
         Fetcher.classifiers.getClassifierGroups(this.state.selectedClassifier)
           .then(res => res.json())
-          .then(res => res.map(r => r.group))
           .then(groups => this.setState({groups}))
     )
 
@@ -155,14 +154,26 @@ class Streams extends Component {
   }
 
   handledGroupSelectChange = e => {
-    this.setState({selectedGroup: e.target.value})
+    const group = this.state.groups.find(g => g._id === e.target.value)
+    this.setState({selectedGroup: group.group})
     const values = this.state.values
-    values[COLUMN.GROUP] = e.target.value
+    values[COLUMN.GROUP] = group.group
+    if (group.numberOfStudents) {
+      values[COLUMN.NUMBER_OF_STUDENTS] = group.numberOfStudents
+    }
+    else {
+      values[COLUMN.NUMBER_OF_STUDENTS] = 0
+    }
+
     this.setState({values})
   }
 
   handledSubjectSelectChange = e => {
     this.setState({selectedSubjectId: e.target.value})
+    const subject = this.state.subjects.find(s => s._id === e.target.value)
+    const values = this.state.values
+    values[COLUMN.SUBJECT] = subject.subject
+    this.setState({values})
   }
 
   getAllRows = () => {
@@ -209,15 +220,17 @@ class Streams extends Component {
           <h4>
             <select name="groupSelecting" id="groupSelectId" onChange={this.handledGroupSelectChange}>
               <option value={EMPTY}/>
-              {this.state.groups.map(row => (<option value={row} key={row + this.state.classifiers}>{row}</option>))}
+              {this.state.groups.map(row => (<option value={row._id} key={row._id}>{row.group}</option>))}
             </select>
           </h4>
           <h4>
             <select name="subjectSelecting" id="subjectSelectId" onChange={this.handledSubjectSelectChange}>
               <option value={EMPTY}/>
-              {this.state.subjects.map(row => (<option value={row._id} key={row._id}>{row.subject}</option>))}
+              {this.state.subjects.map(row => (
+                <option value={row._id} key={row.subject + this.state.selectedClassifier}>{row.subject}</option>))}
             </select>
           </h4>
+          <h4>{this.state.values[COLUMN.NUMBER_OF_STUDENTS]}</h4>
 
           <h2>Հոսքեր</h2>
           <AgGridReact
