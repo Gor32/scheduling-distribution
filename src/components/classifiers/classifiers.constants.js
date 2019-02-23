@@ -1,6 +1,7 @@
 export const COLUMN = {
   CLASSIFIER: 'classifier',
-  GROUP: 'group'
+  GROUP: 'group',
+  NUMBER_OF_STUDENTS: 'numberOfStudents',
 }
 
 export const columnDefs = [
@@ -13,7 +14,13 @@ export const columnDefs = [
     headerName: 'Group',
     field: COLUMN.GROUP,
     enableValue: true
-  }
+  },
+  {
+    headerName: 'Number of students',
+    field: COLUMN.NUMBER_OF_STUDENTS,
+    aggFunc: 'sum',
+    enableValue: true
+  },
 ]
 
 export const VALUES = Object.values(COLUMN).reduce((p, c) => ({...p, [c]: ''}), {})
