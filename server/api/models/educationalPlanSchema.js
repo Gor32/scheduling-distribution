@@ -5,6 +5,7 @@ const educationalPlanSchema = mongoose.Schema({
   classifier: String,
   digit: String,
   courses: String,
+  coursesId: mongoose.Schema.Types.ObjectId,
   semester1: String,
   semester2: String,
   semester3: String,

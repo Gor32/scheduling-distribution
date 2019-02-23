@@ -68,6 +68,7 @@ function createEducationalPLan (body) {
   return new EducationalPlan({
     _id: new mongoose.Types.ObjectId(),
     classifier: body.classifier,
+    coursesId: body.coursesId,
     digit: body.digit,
     courses: body.courses,
     semester1: body.semester1,
