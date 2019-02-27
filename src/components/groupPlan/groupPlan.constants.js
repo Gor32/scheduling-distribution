@@ -1,6 +1,6 @@
 import * as helper from './groupPlan.helper'
 
-export const COLUMN = {
+export const COLUMN_INPUT = {
   SUBJECT: 'subject',
 
   WEEKEND_TIME1: 'weekendTime1',
@@ -20,6 +20,11 @@ export const COLUMN = {
   COURSE2: 'course2',
 
   CHAIR: 'chair'
+}
+
+export const COLUMN = {
+  SUBJECT_ID: 'subjectId',
+  ...COLUMN_INPUT
 }
 
 export const columnDefs = [

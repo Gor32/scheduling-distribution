@@ -6,12 +6,12 @@ export function getColumnDefs () {
   return columnDefs.map(row => {return {...row}})
 }
 
-export function getEducationalPlan (classifier) {
+export function getEducationalPlan (classifier, getGroupTogether) {
   return getGroupByClassifier(classifier)
     .then(groups => {
       return Fetcher.educationalData.getEducationalRowsByClassifier(classifier)
         .then(res => res.json())
-        .then(res => convertDataToGroupPlan(res, groups))
+        .then(res => convertDataToGroupPlan(res, groups, getGroupTogether))
     })
 }
 
@@ -22,13 +22,23 @@ function getGroupByClassifier (classifier) {
     .then(r => r.map(row => row['group']))
 }
 
-function convertDataToGroupPlan (rows, groups) {
+function convertDataToGroupPlan (rows, groups, getGroupTogether) {
   let results = []
   groups.forEach(group => {
     const course = Math.abs(Number(group[0]) - 9)
-    results.push({section: 'group', subject: group + ' կուրս ' + course})
+
+    if (!getGroupTogether) {
+      results.push({section: 'group', subject: group + ' կուրս ' + course, loadGroup: group})
+    }
+
     results = results.concat(rows.map(row => {
       let values = {}
+
+      if (getGroupTogether){
+        values["groupLoadChair"] = group
+        values["courseLoadChair"] = course
+      }
+
       const val = calculateSemesters(row, course)
 
       values[COLUMN.LECTURE1] = val[COLUMN.LECTURE1]
@@ -49,6 +59,7 @@ function convertDataToGroupPlan (rows, groups) {
 
       values[COLUMN.SUBJECT] = row[educationalPlanConstants.COLUMN.COURSES]
       values[COLUMN.CHAIR] = row[educationalPlanConstants.COLUMN.DIGIT]
+      values[COLUMN.SUBJECT_ID] = row[educationalPlanConstants.COLUMN.COURSES_ID]
 
       return values
     }).filter(validation))
