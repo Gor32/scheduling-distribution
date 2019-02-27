@@ -1,5 +1,6 @@
 export const COLUMN = {
   SUBJECT_NAME: 'subjectName',
+  SUBJECT_ID: 'subjectId',
   GROUP: 'group',
 
   NUMBER_OF_STUDENTS: 'numberOfStudents',
@@ -22,7 +23,8 @@ export const columnDefs = [
     children: [{
       headerName: 'Առարկանների անուները',
       field: COLUMN.SUBJECT_NAME,
-      width: 500
+      width: 500,
+      enableRowGroup: true
     }]
   },
   {
@@ -30,7 +32,8 @@ export const columnDefs = [
     children: [
       {
         headerName: 'Խումբ',
-        field: COLUMN.GROUP
+        field: COLUMN.GROUP,
+        enableRowGroup: true
       }]
   },
   {
