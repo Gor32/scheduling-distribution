@@ -46,7 +46,7 @@ function init () {
   values[COLUMN.GROUP] = ''
   values[COLUMN.NUMBER_OF_STUDENTS] = 0
   values[COLUMN.LECTURE] = 0
-  values[COLUMN.PRACTICE] = 0
+  values[COLUMN.PRACTICAL] = 0
   values[COLUMN.LAB] = 0
   values[COLUMN.CONSULTATION] = 0
   values[COLUMN.TESTING] = 0

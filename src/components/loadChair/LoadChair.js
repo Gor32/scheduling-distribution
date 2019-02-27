@@ -6,6 +6,8 @@ import { COLUMN } from './loadChair.constants'
 import 'ag-grid-community/dist/styles/ag-grid.css'
 import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
+import { EMPTY } from '../educationalPlan/educationalPlan.constants'
+import Fetcher from '../../lib/api'
 
 class LoadChair extends Component {
   constructor (props) {
@@ -19,10 +21,12 @@ class LoadChair extends Component {
 
     this.state = {
       columnDefs: helper.getColumnDefs(),
-      rowData: [{'subjectName': '12', 'group': '12'},],
+      rowData: [],
 
       topOptions,
       bottomOptions,
+      selectedClassifier: '',
+      classifiers: [],
       rowSelection: 'multiple',
       rowGroupPanelShow: 'always',
       addedRow: [],
@@ -37,15 +41,41 @@ class LoadChair extends Component {
     }
   }
 
+  getClassifiers = () => {
+    Fetcher.classifiers.getDistinctClassifiersRows()
+      .then(res => res.json())
+      .then(classifiers => this.setState({classifiers}))
+  }
+
   onGridReady (params) {
     this.topGrid = params
     this.gridApi = params.api
-    helper.getLoadChair("61102")
-      .then(addedRow => this.setState({addedRow}))
-      .then(() => {
-        this.gridApi.updateRowData({add: [...this.state.addedRow]})
-      })
     params.api.sizeColumnsToFit()
+    this.getClassifiers()
+  }
+
+  getAllRows = () => {
+    let rowData = []
+    this.gridApi.forEachNode(node => {
+      rowData.push(node.data)
+    })
+    return rowData
+  }
+
+  handledSelectChange = e => {
+    this.setState(
+      {selectedClassifier: e.target.value},
+      () => {
+        const selectedData = this.getAllRows()
+        this.gridApi.updateRowData({remove: selectedData})
+
+        helper.getLoadChair(this.state.selectedClassifier)
+          .then(addedRow => this.setState({addedRow}))
+          .then(() => {
+            this.gridApi.updateRowData({add: [...this.state.addedRow]})
+          })
+      }
+    )
   }
 
   render () {
@@ -67,8 +97,14 @@ class LoadChair extends Component {
             paddingTop: '50px'
           }}
         >
+          <h4>Ուսումնական Պլան դասիչ
+            <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
+              <option value={EMPTY}/>
+              {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
+            </select>
+          </h4>
 
-          <h2>Loading chair</h2>
+          <h2>Ամբիոնի բեռնվածք</h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}
