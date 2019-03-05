@@ -13,6 +13,7 @@ import {
   OK,
   COLUMN,
   VALUES,
+  COLUMN_PLACEHOLDER,
   ENDING_CAPTIONS_INDEX
 } from './classifiers.constants'
 import Fetcher from '../../lib/api'
@@ -116,14 +117,14 @@ class Classifiers extends Component {
         boxSizing: 'border-box'
       }}>
         <div>
-          {
-            Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
-                                  onChange={this.handledTextChange(COLUMN[row])}/>))
-          }
-          <button onClick={this.onAddRow}>Add Row</button>
-          <hr/>
-          <button onClick={this.onRemoveSelected}>Remove Selected</button>
+        <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
+        <input type="text" placeholder={COLUMN_PLACEHOLDER.CLASSIFIER} key={COLUMN.CLASSIFIER}
+                           onChange={this.handledTextChange(COLUMN.CLASSIFIER)}/>
+        <input type="text" placeholder={COLUMN_PLACEHOLDER.GROUP} key={COLUMN.GROUP}
+                           onChange={this.handledTextChange(COLUMN.GROUP)}/>
+        <input type="text" placeholder={COLUMN_PLACEHOLDER.NUMBER_OF_STUDENTS} key={COLUMN.NUMBER_OF_STUDENTS}
+                           onChange={this.handledTextChange(COLUMN.NUMBER_OF_STUDENTS)}/>
+          <button onClick={this.onAddRow}>Ավելացնել տող</button>
         </div>
 
         <div

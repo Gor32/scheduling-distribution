@@ -7,11 +7,14 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
 
 import * as helper from './chairs.helper'
+import { gridLocaleText } from '../../util'
+
 
 import {
   OK,
   COLUMN,
   VALUES,
+  COLUMN_PLACEHOLDER,
   ENDING_CAPTIONS_INDEX
 } from './chairs.constants'
 import Fetcher from '../../lib/api'
@@ -25,7 +28,8 @@ class Chairs extends Component {
       rowSelection: 'multiple',
       values: {...VALUES},
       addedRow: [],
-      removedRows: []
+      removedRows: [],
+      localeText: {}//gridLocaleText
     }
   }
 
@@ -112,15 +116,15 @@ class Chairs extends Component {
         paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
-        <div>
-          {
-            Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
-                                  onChange={this.handledTextChange(COLUMN[row])}/>))
-          }
-          <button onClick={this.onAddRow}>Add Row</button>
-          <hr/>
-          <button onClick={this.onRemoveSelected}>Remove Selected</button>
+        <div className="mat-label">
+
+        <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
+          <input type="text" placeholder={COLUMN_PLACEHOLDER.CODE} key={COLUMN.CODE}
+                             onChange={this.handledTextChange(COLUMN.CODE)}/>
+          <input type="text" placeholder={COLUMN_PLACEHOLDER.CHAIR} key={COLUMN.CHAIR}
+                             onChange={this.handledTextChange(COLUMN.CHAIR)}/>
+          <button onClick={this.onAddRow}>Ավելացնել տող</button>
+          
         </div>
         <div
           className="ag-theme-balham"
@@ -130,7 +134,7 @@ class Chairs extends Component {
             paddingTop: '50px'
           }}
         >
-          <h2>Ամբիոններ</h2>
+          <h2>Ամբիոններ  </h2> 
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}
@@ -140,6 +144,7 @@ class Chairs extends Component {
             deltaRowDataMode={true}
             rowSelection={this.state.rowSelection}
             onGridReady={this.onGridReady}
+            localeText={this.state.localeText}
           >
           </AgGridReact>
         </div>

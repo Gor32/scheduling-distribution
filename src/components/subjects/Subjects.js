@@ -13,6 +13,7 @@ import {
   COLUMN,
   VALUES,
   COLUMN_INPUT,
+  COLUMN_PLACEHOLDER,
   ENDING_CAPTIONS_INDEX
 } from './subjects.constants'
 import Fetcher from '../../lib/api'
@@ -125,20 +126,17 @@ class Subjects extends Component {
         boxSizing: 'border-box'
       }}>
         <div>
+        <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
           <select name="selecting" id="selectID" style={{width: '20%'}} onChange={this.handledTextChange(COLUMN.CHAIR)}>
             <option value={EMPTY}>{'Ամբիոնի կոդ, ամբիոն'}</option>
             {this.state.chairs.map(row => (
               <option value={row.code} key={row.code}>{'Ամբիոնի կոդ ' + row.code + ', ամբիոն ' + row.chair}</option>))}
           </select>
-
-          {
-            Object.keys(COLUMN_INPUT)
-              .map(row => (<input type="text" placeholder={COLUMN_INPUT[row]} key={COLUMN_INPUT[row]}
-                                  onChange={this.handledTextChange(COLUMN_INPUT[row])}/>))
-          }
-          <button onClick={this.onAddRow}>Add Row</button>
-          <hr/>
-          <button onClick={this.onRemoveSelected}>Remove Selected</button>
+          <input type="text" placeholder={COLUMN_PLACEHOLDER.DIGIT} key={COLUMN_INPUT.DIGIT}
+                                  onChange={this.handledTextChange(COLUMN_INPUT.DIGIT)}/>
+          <input type="text" placeholder={COLUMN_PLACEHOLDER.SUBJECT} key={COLUMN_INPUT.SUBJECT}
+                                  onChange={this.handledTextChange(COLUMN_INPUT.SUBJECT)}/>
+          <button onClick={this.onAddRow}>Ավելացնել տող</button>
         </div>
         <div
           className="ag-theme-balham"

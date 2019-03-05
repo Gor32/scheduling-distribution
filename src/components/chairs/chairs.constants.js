@@ -3,6 +3,11 @@ export const COLUMN = {
   CHAIR: 'chair'
 }
 
+export const COLUMN_PLACEHOLDER = {
+  CODE: 'Ամբիոնի կոդ',
+  CHAIR: 'Ամբիոն'
+}
+
 export const columnDefs = [
   {
     headerName: 'Ամբիոնի կոդ',

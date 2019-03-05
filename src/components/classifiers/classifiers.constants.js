@@ -4,19 +4,25 @@ export const COLUMN = {
   NUMBER_OF_STUDENTS: 'numberOfStudents',
 }
 
+export const COLUMN_PLACEHOLDER = {
+  CLASSIFIER: 'Դասիչ',
+  GROUP: 'Խումբ',
+  NUMBER_OF_STUDENTS: 'Ուսանողների քանակ',
+}
+
 export const columnDefs = [
   {
-    headerName: 'Classifier',
+    headerName: 'Դասիչ',
     field: COLUMN.CLASSIFIER,
     rowGroup: true,
   },
   {
-    headerName: 'Group',
+    headerName: 'Խումբ',
     field: COLUMN.GROUP,
     enableValue: true
   },
   {
-    headerName: 'Number of students',
+    headerName: 'Ուսանողների քանակ',
     field: COLUMN.NUMBER_OF_STUDENTS,
     aggFunc: 'sum',
     enableValue: true

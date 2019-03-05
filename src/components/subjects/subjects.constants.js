@@ -7,7 +7,10 @@ export const COLUMN = {
   CHAIR: 'chair',
   ...COLUMN_INPUT
 }
-
+export const COLUMN_PLACEHOLDER = {
+  DIGIT: 'Թվանիշ',
+  SUBJECT: 'Առարկա'
+}
 export const columnDefs = [
   {
     headerName: 'Ա. կոդ',
