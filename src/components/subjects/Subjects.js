@@ -122,10 +122,13 @@ class Subjects extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
+
+        <h2>Առարկաներ</h2>
         <div>
+
         <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
           <select name="selecting" id="selectID" style={{width: '20%'}} onChange={this.handledTextChange(COLUMN.CHAIR)}>
             <option value={EMPTY}>{'Ամբիոնի կոդ, ամբիոն'}</option>
@@ -143,10 +146,9 @@ class Subjects extends Component {
           style={{
             height: '500px',
             width: '100',
-            paddingTop: '50px'
+            //paddingTop: '50px'
           }}
         >
-          <h2>Առարկաներ</h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}

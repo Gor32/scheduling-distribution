@@ -88,15 +88,17 @@ class GroupPlan extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
+
+        <h2>Խմբային պլան</h2>
         <div
           className="ag-theme-balham"
           style={{
             height: '500px',
-            width: '100',
-            paddingTop: '50px'
+            width: '100%',
+            //paddingTop: '5px'
           }}
         >
 
@@ -105,13 +107,13 @@ class GroupPlan extends Component {
               <option value={EMPTY}/>
               {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
             </select>
+
+            <select name="selectingZero" id="selectZeroID" onChange={this.handledSelectZeroChange}>
+              {this.state.showZero.map(row => (<option value={row} key={row}>{row}</option>))}
+            </select>
           </h4>
 
-          <select name="selectingZero" id="selectZeroID" onChange={this.handledSelectZeroChange}>
-            {this.state.showZero.map(row => (<option value={row} key={row}>{row}</option>))}
-          </select>
 
-          <h2>Խմբային պլան</h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}

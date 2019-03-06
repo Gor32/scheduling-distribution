@@ -114,9 +114,11 @@ class LoadChair extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
+
+        <h2>Ամբիոնի բեռնվածք</h2>
         <div
           className="ag-theme-balham"
           style={{
@@ -125,7 +127,7 @@ class LoadChair extends Component {
             boxSizing: 'border-box',
             // height: "100%",
             // width: "100%",
-            paddingTop: '50px'
+            //paddingTop: '50px'
           }}
         >
           <h4>Ուսումնական Պլան դասիչ
@@ -135,7 +137,6 @@ class LoadChair extends Component {
             </select>
           </h4>
 
-          <h2>Ամբիոնի բեռնվածք</h2>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}

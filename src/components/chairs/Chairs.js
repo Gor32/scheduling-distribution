@@ -113,9 +113,10 @@ class Chairs extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
+        <h2>Ամբիոններ  </h2>
         <div className="mat-label">
 
         <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
@@ -131,10 +132,9 @@ class Chairs extends Component {
           style={{
             height: '500px',
             width: '100',
-            paddingTop: '50px'
+            //paddingTop: '50px'
           }}
         >
-          <h2>Ամբիոններ  </h2> 
           <AgGridReact
             columnDefs={this.state.columnDefs}
             animateRows={true}

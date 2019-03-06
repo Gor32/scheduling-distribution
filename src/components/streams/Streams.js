@@ -145,6 +145,8 @@ class Streams extends Component {
 
     helper.getStreams(e.target.value)
       .then(rowData => rowData.map(r => {
+        console.log(r)
+        console.log(this.state.subjects)
         return {
           ...r,
           'subject': this.state.subjects.find(subject => subject._id === r.subjectId).subject
@@ -189,50 +191,46 @@ class Streams extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
+
+        <h2>Հոսքեր</h2>
+        <span>Ուսումնական Պլան դասիչ </span>
+        <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
+          <option value={EMPTY}/>
+          {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
+        </select>
+        <span> Խումբ </span>
+        <select name="groupSelecting" id="groupSelectId" onChange={this.handledGroupSelectChange}>
+          <option value={EMPTY}/>
+          {this.state.groups.map(row => (<option value={row._id} key={row._id}>{row.group}</option>))}
+        </select>
+        <span> Ուսանողների քանակ </span>
+        {this.state.values[COLUMN.NUMBER_OF_STUDENTS]}
         <div>
-          {
-            Object.keys(COLUMN)
-              .map(row => (<input type="text" placeholder={COLUMN[row]} key={COLUMN[row]}
-                                  onChange={this.handledTextChange(COLUMN[row])}/>))
-          }
-          <button onClick={this.onAddRow}>Add Row</button>
-          <hr/>
-          <button onClick={this.onRemoveSelected}>Remove Selected</button>
+
+          <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
+
+          <input type="text" placeholder={COLUMN.STREAM} key={COLUMN.STREAM}
+                 onChange={this.handledTextChange(COLUMN.STREAM)}/>
+
+          <span> Առարկա </span>
+          <select name="subjectSelecting" id="subjectSelectId" onChange={this.handledSubjectSelectChange}>
+            <option value={EMPTY}/>
+            {this.state.subjects.map(row => (
+              <option value={row._id} key={row.subject + this.state.selectedClassifier}>{row.subject}</option>))}
+          </select>
+          <button onClick={this.onAddRow}>Ավելացնել տող</button>
         </div>
         <div
           className="ag-theme-balham"
           style={{
             height: '500px',
             width: '100',
-            paddingTop: '50px'
+            //paddingTop: '50px'
           }}
         >
-          <h4>Ուսումնական Պլան դասիչ
-            <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
-              <option value={EMPTY}/>
-              {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
-            </select>
-          </h4>
-
-          <h4>
-            <select name="groupSelecting" id="groupSelectId" onChange={this.handledGroupSelectChange}>
-              <option value={EMPTY}/>
-              {this.state.groups.map(row => (<option value={row._id} key={row._id}>{row.group}</option>))}
-            </select>
-          </h4>
-          <h4>
-            <select name="subjectSelecting" id="subjectSelectId" onChange={this.handledSubjectSelectChange}>
-              <option value={EMPTY}/>
-              {this.state.subjects.map(row => (
-                <option value={row._id} key={row.subject + this.state.selectedClassifier}>{row.subject}</option>))}
-            </select>
-          </h4>
-          <h4>{this.state.values[COLUMN.NUMBER_OF_STUDENTS]}</h4>
-
-          <h2>Հոսքեր</h2>
           <AgGridReact
             enableSorting={true}
             columnDefs={this.state.columnDefs}

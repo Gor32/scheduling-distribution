@@ -207,10 +207,11 @@ class EducationalPlan extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}
       >
+        <h2>Ուսումնական Պլան</h2>
         <div>
           <select name="selectingCourses" id="selectCoursesID" onChange={this.handledTextChange(COLUMN.COURSES)}>
             <option value={EMPTY}>{'Առարկա, ամբիոնի կոդ'}</option>
@@ -232,7 +233,7 @@ class EducationalPlan extends Component {
           style={{
             height: '500px',
             width: '100',
-            paddingTop: '50px'
+            //paddingTop: '50px'
           }}
         >
           <h4>Ուսումնական Պլան դասիչ

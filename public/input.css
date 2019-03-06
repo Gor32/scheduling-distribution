@@ -1,9 +1,9 @@
 
-  body * {
+body * {
     font-family: 'Montserrat' sans-serif;
-  }
+}
 
-  button {
+button {
     background-color: rgb(30, 138, 125);
     color: white;
     border: none;
@@ -11,20 +11,20 @@
     padding: 15px 20px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  input {
+}
+
+input {
     border: none;
     margin: 25px auto;
     padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  select {
+}
+
+select {
     border: none;
     margin: 25px auto;
     padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
-  }
+}

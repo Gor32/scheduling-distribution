@@ -113,9 +113,11 @@ class Classifiers extends Component {
       <div style={{
         width: '100%',
         height: '100%',
-        paddingTop: '5px',
+        //paddingTop: '5px',
         boxSizing: 'border-box'
       }}>
+
+        <h2>Դասիչներ</h2>
         <div>
         <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
         <input type="text" placeholder={COLUMN_PLACEHOLDER.CLASSIFIER} key={COLUMN.CLASSIFIER}
@@ -132,10 +134,9 @@ class Classifiers extends Component {
           style={{
             height: '500px',
             width: '100',
-            paddingTop: '50px'
+            //paddingTop: '50px'
           }}
         >
-          <h2>Դասիչներ</h2>
           <AgGridReact
             enableSorting={true}
             columnDefs={this.state.columnDefs}
