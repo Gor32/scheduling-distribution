@@ -80,21 +80,17 @@ export const columnDefs = [
         field: COLUMN.COURSE_WORK
       },
       {
-        headerName: 'Կուրսային աշխատանքներ',
-        field: COLUMN.COURSE_WORK
-      },
-      {
         headerName: 'Դիպլոմային',
         field: COLUMN.DIPLOMA
       },
-      {
-        headerName: 'Ընդհանուր կիսամյակով',
-        field: COLUMN.TOTAL_SEMESTER
-      },
-      {
-        headerName: 'Ընդհանուր',
-        field: COLUMN.TOTAL
-      }
+      // {
+      //   headerName: 'Ընդհանուր կիսամյակով',
+      //   field: COLUMN.TOTAL_SEMESTER
+      // },
+      // {
+      //   headerName: 'Ընդհանուր',
+      //   field: COLUMN.TOTAL
+      // }
 
     ]
   }

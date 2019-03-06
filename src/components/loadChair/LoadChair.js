@@ -32,8 +32,8 @@ class LoadChair extends Component {
       addedRow: [],
       bottomData: [
         {
-          subjectName: 'Total',
-          group: '15 - 61',
+          subjectName: '',
+          group: 'Ընդհանուր',
         }
       ]
       ,
@@ -74,8 +74,39 @@ class LoadChair extends Component {
           .then(() => {
             this.gridApi.updateRowData({add: [...this.state.addedRow]})
           })
+          .then(() => {
+            if (this.state.selectedClassifier !== EMPTY) {
+              this.setBottomData()
+            }
+          })
       }
     )
+  }
+
+  setBottomData = () => {
+    const bottomData = {}
+    bottomData[COLUMN.GROUP] = 'Ընդհանուր'
+    bottomData[COLUMN.NUMBER_OF_STUDENTS] = this.aggregationFunction(COLUMN.NUMBER_OF_STUDENTS)
+    bottomData[COLUMN.LECTURE] = this.aggregationFunction(COLUMN.LECTURE)
+    bottomData[COLUMN.PRACTICAL] = this.aggregationFunction(COLUMN.PRACTICAL)
+    bottomData[COLUMN.LAB] = this.aggregationFunction(COLUMN.LAB)
+    bottomData[COLUMN.CONSULTATION] = this.aggregationFunction(COLUMN.CONSULTATION)
+    bottomData[COLUMN.TESTING] = this.aggregationFunction(COLUMN.TESTING)
+    bottomData[COLUMN.EXAMINATION] = this.aggregationFunction(COLUMN.EXAMINATION)
+    bottomData[COLUMN.PRACTICE] = this.aggregationFunction(COLUMN.PRACTICE)
+    bottomData[COLUMN.COURSE_WORK] = this.aggregationFunction(COLUMN.COURSE_WORK)
+    bottomData[COLUMN.DIPLOMA] = this.aggregationFunction(COLUMN.DIPLOMA)
+    this.setState({bottomData: [bottomData]})
+  }
+
+  aggregationFunction = (column) => {
+    return this.state.addedRow.reduce((x, y) => {
+        const res = {}
+        res[column] =
+          Number(x[column]) + Number(y[column])
+        return res
+      }
+    )[column]
   }
 
   render () {
