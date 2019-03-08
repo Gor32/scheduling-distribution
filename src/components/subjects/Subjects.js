@@ -18,6 +18,7 @@ import {
 } from './subjects.constants'
 import Fetcher from '../../lib/api'
 import { EMPTY } from '../educationalPlan/educationalPlan.constants'
+import { gridLocaleText } from '../../util'
 
 class Subjects extends Component {
   constructor (props) {
@@ -30,7 +31,8 @@ class Subjects extends Component {
       addedRow: [],
       removedRows: [],
       chairs: [],
-      selectedChair: EMPTY
+      selectedChair: EMPTY,
+      localeText: gridLocaleText
     }
   }
 
@@ -158,6 +160,7 @@ class Subjects extends Component {
             deltaRowDataMode={true}
             rowSelection={this.state.rowSelection}
             onGridReady={this.onGridReady}
+            localeText={this.state.localeText}
           >
           </AgGridReact>
         </div>

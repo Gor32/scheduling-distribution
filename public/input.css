@@ -21,6 +21,10 @@ input {
     cursor: pointer;
 }
 
+.sem-input {
+    width: 10%;
+}
+
 select {
     border: none;
     margin: 25px auto;

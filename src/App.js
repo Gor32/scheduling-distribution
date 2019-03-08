@@ -34,7 +34,7 @@ class App extends Component {
       <Router>
         <div  >
           <div className="w3-sidebar w3-bar-block w3-animate-left" style={{display:'none','zIndex':5}} id="mySidebar">
-            <button className="w3-bar-item w3-button w3-large" onClick={this.w3_close}>Close &times;</button>
+            <button className="w3-bar-item w3-button w3-large" onClick={this.w3_close}>Փակել &times;</button>
             <Link to="/" className="w3-bar-item w3-button">Home </Link>
             <Link to="/educationalPlan" className="w3-bar-item w3-button">Ուսումնական պլան </Link>
             <Link to="/subjects" className="w3-bar-item w3-button">Առարկաներ </Link>

@@ -8,6 +8,7 @@ import './educationalPlan.style.css'
 import 'ag-grid-enterprise'
 
 import * as helper from './educationalPlan.helper'
+import { gridLocaleText } from '../../util'
 
 import {
   OK,
@@ -16,6 +17,7 @@ import {
   VALUES,
   SEMESTERS,
   COLUMN_INPUT,
+  COLUMN_PLACEHOLDER,
   ENDING_CAPTIONS_INDEX
 } from './educationalPlan.constants'
 
@@ -35,6 +37,7 @@ class EducationalPlan extends Component {
       classifiers: [],
       selectedClassifier: EMPTY,
       courses: [],
+      localeText: gridLocaleText,
       defaultColDef: {
         sortable: true,
         filter: true
@@ -211,22 +214,52 @@ class EducationalPlan extends Component {
         boxSizing: 'border-box'
       }}
       >
-        <h2>Ուսումնական Պլան</h2>
+        <h2>Ուսումնական պլան</h2>
         <div>
+          <span>Ուսումնական պլան դասիչ </span>
+          <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
+            <option value={EMPTY}/>
+            {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
+          </select>
+
+
           <select name="selectingCourses" id="selectCoursesID" onChange={this.handledTextChange(COLUMN.COURSES)}>
             <option value={EMPTY}>{'Առարկա, ամբիոնի կոդ'}</option>
             {this.state.courses.map((row, index) => (
               <option value={index} key={row.digit}>{' ' + row.subject + ', ' + row.chair}</option>))}
           </select>
-
-          {
-            Object.keys(COLUMN_INPUT)
-              .map(row => (<input type="text" placeholder={COLUMN_INPUT[row]} key={COLUMN_INPUT[row]}
-                                  defaultValue={this.state.values[COLUMN_INPUT[row]]} onChange={this.handledTextChange(COLUMN_INPUT[row])}/>))
-          }
-          <button onClick={this.onAddRow}>Add Row</button>
-          <hr/>
-          <button onClick={this.onRemoveSelected}>Remove Selected</button>
+          <div>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.DIGIT} key={COLUMN_INPUT.DIGIT}
+                   defaultValue={this.state.values[COLUMN_INPUT.DIGIT]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.DIGIT)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER1} key={COLUMN_INPUT.SEMESTER1}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER1]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER1)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER2} key={COLUMN_INPUT.SEMESTER2}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER2]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER2)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER3} key={COLUMN_INPUT.SEMESTER3}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER3]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER3)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER4} key={COLUMN_INPUT.SEMESTER4}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER4]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER4)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER5} key={COLUMN_INPUT.SEMESTER5}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER5]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER5)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER6} key={COLUMN_INPUT.SEMESTER6}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER6]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER6)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER7} key={COLUMN_INPUT.SEMESTER7}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER7]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER7)} className="sem-input"/>
+            <input type="text" placeholder={COLUMN_PLACEHOLDER.SEMESTER8} key={COLUMN_INPUT.SEMESTER8}
+                   defaultValue={this.state.values[COLUMN_INPUT.SEMESTER8]}
+                   onChange={this.handledTextChange(COLUMN_INPUT.SEMESTER8)} className="sem-input"/>
+          </div>
+          <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
+          &nbsp; &nbsp;
+          <button onClick={this.onAddRow}>Ավելացնել տող</button>
         </div>
         <div
           className="ag-theme-balham"
@@ -236,12 +269,6 @@ class EducationalPlan extends Component {
             //paddingTop: '50px'
           }}
         >
-          <h4>Ուսումնական Պլան դասիչ
-            <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
-              <option value={EMPTY}/>
-              {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
-            </select>
-          </h4>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
@@ -253,6 +280,7 @@ class EducationalPlan extends Component {
             rowSelection={this.state.rowSelection}
             getRowHeight={this.state.getRowHeight}
             onGridReady={this.onGridReady}
+            localeText={this.state.localeText}
           >
           </AgGridReact>
         </div>

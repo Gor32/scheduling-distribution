@@ -29,7 +29,7 @@ class Chairs extends Component {
       values: {...VALUES},
       addedRow: [],
       removedRows: [],
-      localeText: {}//gridLocaleText
+      localeText: gridLocaleText
     }
   }
 

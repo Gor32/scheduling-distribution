@@ -17,6 +17,7 @@ import {
   ENDING_CAPTIONS_INDEX
 } from './classifiers.constants'
 import Fetcher from '../../lib/api'
+import { gridLocaleText } from '../../util'
 
 class Classifiers extends Component {
   constructor (props) {
@@ -29,7 +30,8 @@ class Classifiers extends Component {
       rowSelection: 'multiple',
       values: {...VALUES},
       addedRow: [],
-      removedRows: []
+      removedRows: [],
+      localeText: gridLocaleText
     }
   }
 
@@ -150,6 +152,8 @@ class Classifiers extends Component {
             onGridReady={this.onGridReady}
             rowSelection={this.state.rowSelection}
             rowData={this.state.rowData}
+
+            localeText={this.state.localeText}
 
             enableGroupEdit={true}>
           </AgGridReact>

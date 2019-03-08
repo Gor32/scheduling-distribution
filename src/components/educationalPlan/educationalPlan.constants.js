@@ -33,6 +33,18 @@ export const COLUMN = {
   ...COLUMN_INPUT
 }
 
+export const COLUMN_PLACEHOLDER = {
+  DIGIT: 'թվանիշ',
+  SEMESTER1: 'կիսամյակ 1',
+  SEMESTER2: 'կիսամյակ 2',
+  SEMESTER3: 'կիսամյակ 3',
+  SEMESTER4: 'կիսամյակ 4',
+  SEMESTER5: 'կիսամյակ 5',
+  SEMESTER6: 'կիսամյակ 6',
+  SEMESTER7: 'կիսամյակ 7',
+  SEMESTER8: 'կիսամյակ 8'
+}
+
 export const VALUES = Object.values(COLUMN).reduce((p, c) => ({...p, [c]: ''}), {})
 
 export const columnDefs = [
@@ -112,4 +124,4 @@ export const rowData = [
 export const ENDING_CAPTIONS_INDEX = 2
 export const OK = 1
 
-export const EMPTY = "empty"
+export const EMPTY = 'empty'

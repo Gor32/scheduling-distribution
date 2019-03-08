@@ -9,27 +9,34 @@ export const COLUMN = {
 
 export const columnDefs = [
   {
-    headerName: 'Stream',
+    headerName: 'Հոսք',
     field: COLUMN.STREAM,
     rowGroup: true,
   },
   {
-    headerName: 'Group',
+    headerName: 'Խումբ',
     field: COLUMN.GROUP,
     aggFunc: getCount,
     enableValue: true
   },
   {
-    headerName: 'Number of students',
+    headerName: 'Ուսանողների քանակ',
     field: COLUMN.NUMBER_OF_STUDENTS,
     aggFunc: 'sum',
     enableValue: true
   },
   {
-    headerName: 'Subject',
+    headerName: 'Առարկա',
     field: 'subject'
   }
 ]
+
+export const COLUMN_PLACEHOLDER = {
+  STREAM: 'Հոսք',
+  GROUP: 'Խումբ',
+  NUMBER_OF_STUDENTS: 'Ուսանողների քանակ',
+  SUBJECT: 'Առարկա',
+}
 
 export const VALUES = Object.values(COLUMN).reduce((p, c) => ({...p, [c]: ''}), {})
 

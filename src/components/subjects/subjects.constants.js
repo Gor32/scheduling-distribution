@@ -14,12 +14,12 @@ export const COLUMN_PLACEHOLDER = {
 export const columnDefs = [
   {
     headerName: 'Ա. կոդ',
-    width: 13,
+    width: 50,
     field: COLUMN.CHAIR
   },
   {
     headerName: 'Թվանիշ',
-    width: 20,
+    width: 100,
     field: COLUMN.DIGIT
   },
   {

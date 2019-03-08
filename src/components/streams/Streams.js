@@ -8,10 +8,17 @@ import 'ag-grid-enterprise'
 
 import * as helper from './streams.helper'
 import GroupRowInnerRendererForStreams from '../groupRowInnerRendererForStreams/groupRowInnerRendererForStreams'
-import { COLUMN, VALUES, ENDING_CAPTIONS_INDEX, OK } from './streams.constants'
+import {
+  COLUMN,
+  VALUES,
+  COLUMN_PLACEHOLDER,
+  ENDING_CAPTIONS_INDEX,
+  OK
+} from './streams.constants'
 import { getCount } from './streams.helper'
 import { EMPTY } from '../educationalPlan/educationalPlan.constants'
 import Fetcher from '../../lib/api'
+import { gridLocaleText } from '../../util'
 
 class Streams extends Component {
   constructor (props) {
@@ -34,6 +41,7 @@ class Streams extends Component {
       values: {...VALUES},
       addedRow: [],
       removedRows: [],
+      localeText: gridLocaleText
     }
   }
 
@@ -196,7 +204,7 @@ class Streams extends Component {
       }}>
 
         <h2>Հոսքեր</h2>
-        <span>Ուսումնական Պլան դասիչ </span>
+        <span>Ուսումնական պլան դասիչ </span>
         <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
           <option value={EMPTY}/>
           {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
@@ -212,7 +220,7 @@ class Streams extends Component {
 
           <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
 
-          <input type="text" placeholder={COLUMN.STREAM} key={COLUMN.STREAM}
+          <input type="text" placeholder={COLUMN_PLACEHOLDER.STREAM} key={COLUMN.STREAM}
                  onChange={this.handledTextChange(COLUMN.STREAM)}/>
 
           <span> Առարկա </span>
@@ -246,6 +254,7 @@ class Streams extends Component {
             rowData={this.state.rowData}
 
             aggFuncs={this.state.aggFuncs}
+            localeText={this.state.localeText}
             enableGroupEdit={true}>
           </AgGridReact>
         </div>

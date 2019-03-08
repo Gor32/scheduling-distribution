@@ -7,6 +7,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
 import Fetcher from '../../lib/api'
 import { EMPTY } from '../educationalPlan/educationalPlan.constants'
+import { gridLocaleText } from '../../util'
 
 class GroupPlan extends Component {
   constructor (props) {
@@ -19,7 +20,8 @@ class GroupPlan extends Component {
       showZero: ['Ցույց տալ զրոնները', 'Ցույց չտալ զրոնները'],
       selectedShowZero: false,
       selectedClassifier: '',
-      rowSelection: 'multiple'
+      rowSelection: 'multiple',
+      localeText: gridLocaleText
     }
   }
 
@@ -102,7 +104,7 @@ class GroupPlan extends Component {
           }}
         >
 
-          <h4>Ուսումնական Պլան դասիչ
+          <h4>Ուսումնական պլան դասիչ
             <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
               <option value={EMPTY}/>
               {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
@@ -123,6 +125,7 @@ class GroupPlan extends Component {
             enableGroupEdit={true}
             onGridReady={this.onGridReady.bind(this)}
             rowSelection={this.state.rowSelection}
+            localeText={this.state.localeText}
           />
         </div>
       </div>

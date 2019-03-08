@@ -8,6 +8,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
 import { EMPTY } from '../educationalPlan/educationalPlan.constants'
 import Fetcher from '../../lib/api'
+import { gridLocaleText } from '../../util'
 
 class LoadChair extends Component {
   constructor (props) {
@@ -29,6 +30,7 @@ class LoadChair extends Component {
       classifiers: [],
       rowSelection: 'multiple',
       rowGroupPanelShow: 'always',
+      localeText: gridLocaleText,
       addedRow: [],
       bottomData: [
         {
@@ -130,7 +132,7 @@ class LoadChair extends Component {
             //paddingTop: '50px'
           }}
         >
-          <h4>Ուսումնական Պլան դասիչ
+          <h4>Ուսումնական պլան դասիչ
             <select name="selecting" id="selectID" onChange={this.handledSelectChange}>
               <option value={EMPTY}/>
               {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
@@ -150,6 +152,7 @@ class LoadChair extends Component {
             suppressDragLeaveHidesColumns={true}
             suppressMakeColumnVisibleAfterUnGroup={true}
             rowGroupPanelShow={this.state.rowGroupPanelShow}
+            localeText={this.state.localeText}
 
             gridOptions={this.state.topOptions}
           />
@@ -161,6 +164,7 @@ class LoadChair extends Component {
               columnDefs={this.state.columnDefs}
               headerHeight="0"
               rowStyle={{fontWeight: 'bold'}}
+              localeText={this.state.localeText}
             />
           </div>
         </div>

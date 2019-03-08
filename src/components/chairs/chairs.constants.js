@@ -11,11 +11,12 @@ export const COLUMN_PLACEHOLDER = {
 export const columnDefs = [
   {
     headerName: 'Ամբիոնի կոդ',
-    width: 20,
+    width: 300,
     field: COLUMN.CODE
   },
   {
     headerName: 'Ամբիոն',
+    width: 700,
     field: COLUMN.CHAIR
   }
 ]
