@@ -32,6 +32,8 @@ class LoadChair extends Component {
       rowGroupPanelShow: 'always',
       localeText: gridLocaleText,
       addedRow: [],
+      showZero: ['Ցույց տալ զրոնները', 'Ցույց չտալ զրոնները'],
+      selectedShowZero: false,
       bottomData: [
         {
           subjectName: '',
@@ -70,9 +72,17 @@ class LoadChair extends Component {
       () => {
         const selectedData = this.getAllRows()
         this.gridApi.updateRowData({remove: selectedData})
-
         helper.getLoadChair(this.state.selectedClassifier)
-          .then(addedRow => this.setState({addedRow}))
+          .then(addedRow => {
+            addedRow.forEach(row => {
+              if (this.state.selectedShowZero) {
+                helper.changeRowAfterSelectZero(row, 0, '')
+              } else {
+                helper.changeRowAfterSelectZero(row, '', 0)
+              }
+            })
+            this.setState({addedRow})
+          })
           .then(() => {
             this.gridApi.updateRowData({add: [...this.state.addedRow]})
           })
@@ -83,6 +93,45 @@ class LoadChair extends Component {
           })
       }
     )
+  }
+
+  handledSelectZeroChange = e => {
+    if (this.state.selectedClassifier !== '') {
+      const selectedData = this.getAllRows()
+      this.gridApi.updateRowData({remove: selectedData})
+      helper.getLoadChair(this.state.selectedClassifier)
+        .then(rowData => {
+          rowData.forEach(row => {
+            if (this.state.selectedShowZero) {
+              helper.changeRowAfterSelectZero(row, 0, '')
+            } else {
+              helper.changeRowAfterSelectZero(row, '', 0)
+            }
+          })
+          this.setState({addedRow: rowData})
+        })
+        .then(() => {
+          this.gridApi.updateRowData({add: [...this.state.addedRow]})
+        })
+        .then(() => {
+          if (this.state.selectedClassifier !== EMPTY) {
+            this.setBottomData()
+          }
+        })
+      // helper.getEducationalPlan(this.state.selectedClassifier)
+      //   .then(rowData => {
+      //       rowData.forEach(row => {
+      //         if (this.state.selectedShowZero) {
+      //           helper.changeRowAfterSelectZero(row, 0, '')
+      //         } else {
+      //           helper.changeRowAfterSelectZero(row, '', 0)
+      //         }
+      //       })
+      //       this.gridApi.updateRowData({add: [...rowData]})
+      //     }
+      //   )
+    }
+    this.setState({selectedShowZero: !this.state.selectedShowZero})
   }
 
   setBottomData = () => {
@@ -98,6 +147,7 @@ class LoadChair extends Component {
     bottomData[COLUMN.PRACTICE] = this.aggregationFunction(COLUMN.PRACTICE)
     bottomData[COLUMN.COURSE_WORK] = this.aggregationFunction(COLUMN.COURSE_WORK)
     bottomData[COLUMN.DIPLOMA] = this.aggregationFunction(COLUMN.DIPLOMA)
+    bottomData[COLUMN.TOTAL] = this.aggregationFunction(COLUMN.TOTAL)
     this.setState({bottomData: [bottomData]})
   }
 
@@ -137,6 +187,11 @@ class LoadChair extends Component {
               <option value={EMPTY}/>
               {this.state.classifiers.map(row => (<option value={row} key={row}>{row}</option>))}
             </select>
+            <span> </span>
+            <select name="selectingZero" id="selectZeroID" onChange={this.handledSelectZeroChange}>
+              {this.state.showZero.map(row => (<option value={row} key={row}>{row}</option>))}
+            </select>
+
           </h4>
 
           <AgGridReact

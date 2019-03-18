@@ -228,6 +228,7 @@ class EducationalPlan extends Component {
             {this.state.courses.map((row, index) => (
               <option value={index} key={row.digit}>{' ' + row.subject + ', ' + row.chair}</option>))}
           </select>
+
           <div>
             <input type="text" placeholder={COLUMN_PLACEHOLDER.DIGIT} key={COLUMN_INPUT.DIGIT}
                    defaultValue={this.state.values[COLUMN_INPUT.DIGIT]}
@@ -260,6 +261,7 @@ class EducationalPlan extends Component {
           <button onClick={this.onRemoveSelected}>Հեռացնել նշվածները</button>
           &nbsp; &nbsp;
           <button onClick={this.onAddRow}>Ավելացնել տող</button>
+
         </div>
         <div
           className="ag-theme-balham"

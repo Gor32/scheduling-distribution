@@ -60,7 +60,6 @@ function convertDataToGroupPlan (rows, groups, getGroupTogether) {
       values[COLUMN.SUBJECT] = row[educationalPlanConstants.COLUMN.COURSES]
       values[COLUMN.CHAIR] = row[educationalPlanConstants.COLUMN.DIGIT]
       values[COLUMN.SUBJECT_ID] = row[educationalPlanConstants.COLUMN.COURSES_ID]
-
       return values
     }).filter(validation))
   })
@@ -143,8 +142,9 @@ function calculateSemesters (row, course) {
       values[COLUMN.TESTING1] = 'Ս'
     }
   } else {
-    if (splittingValues1.length > 0 && splittingValues1[0] !== '')
+    if (splittingValues1.length > 0 && splittingValues1[0] !== ''){
       values[COLUMN.COURSE1] = 'Կ'
+    }
   }
 
   if (splittingValues2.length > 2) {
@@ -160,8 +160,9 @@ function calculateSemesters (row, course) {
     }
   }
   else {
-    if (splittingValues2.length > 0 && splittingValues2[0] !== '')
+    if (splittingValues2.length > 0 && splittingValues2[0] !== ''){
       values[COLUMN.COURSE2] = 'Կ'
+    }
   }
 
   return values
@@ -200,10 +201,10 @@ export function changeRowAfterSelectZero (row, changeFrom, changeTo) {
   if (row[COLUMN.WEEKEND_TIME1] === changeFrom) {
     row[COLUMN.WEEKEND_TIME1] = changeTo
   }
+
   if (row[COLUMN.WEEKEND_TIME2] === changeFrom) {
     row[COLUMN.WEEKEND_TIME2] = changeTo
   }
-
 }
 
 export function groupInfo (params) {

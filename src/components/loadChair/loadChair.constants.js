@@ -87,11 +87,14 @@ export const columnDefs = [
       //   headerName: 'Ընդհանուր կիսամյակով',
       //   field: COLUMN.TOTAL_SEMESTER
       // },
-      // {
-      //   headerName: 'Ընդհանուր',
-      //   field: COLUMN.TOTAL
-      // }
+      {
+        headerName: 'Ընդհանուր',
+        field: COLUMN.TOTAL
+      }
 
     ]
   }
 ]
+
+export const WEEK_OF_EDUCATIONAL = 16
+export const WEEK_MANUFACTURER = 1
