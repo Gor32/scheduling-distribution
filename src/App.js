@@ -9,6 +9,7 @@ import Subjects from './components/subjects/Subjects'
 import Chairs from './components/chairs/Chairs'
 import Streams from './components/streams/Streams'
 import Classifiers from './components/classifiers/Classifiers'
+import Norms from './components/norms/Norms'
 import GroupPlan from './components/groupPlan/GroupPlan'
 import LoadChair from './components/loadChair/LoadChair'
 
@@ -41,6 +42,7 @@ class App extends Component {
             <Link to="/chairs" className="w3-bar-item w3-button">Ամբիոններ </Link>
             <Link to="/streams" className="w3-bar-item w3-button">Հոսքեր </Link>
             <Link to="/classifiers" className="w3-bar-item w3-button">Դասիչներ </Link>
+            <Link to="/norms" className="w3-bar-item w3-button">Պարամետրեր </Link>
             <Link to="/groupPlan" className="w3-bar-item w3-button">Խմբային պլան </Link>
             <Link to="./loadChair" className="w3-bar-item w3-button">Ամբիոնի բեռնվածք </Link>
           </div>
@@ -57,6 +59,7 @@ class App extends Component {
               <Route path='/chairs' component={Chairs}/>
               <Route path='/streams' component={Streams}/>
               <Route path='/classifiers' component={Classifiers}/>
+              <Route path='/norms' component={Norms}/>
               <Route path='/groupPlan' component={GroupPlan}/>
               <Route path='/loadChair' component={LoadChair}/>
             </div>
