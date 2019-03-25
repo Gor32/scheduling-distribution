@@ -38,7 +38,7 @@ function convertToLoadChair (res, classifier) {
         if (!val[COLUMN.NUMBER_OF_STUDENTS]) {val[COLUMN.NUMBER_OF_STUDENTS] = 0}
 
         val[COLUMN.PRACTICAL] = (row[groupPlanColumn.PRACTICAL1] + row[groupPlanColumn.PRACTICAL2]) * VALUE_MANUFACTURER
-        val[COLUMN.LAB] = (row[groupPlanColumn.LAB1] + row [groupPlanColumn.LAB2]) * VALUE_MANUFACTURER
+        val[COLUMN.LAB] = (row[groupPlanColumn.LAB1] + row[groupPlanColumn.LAB2]) * VALUE_MANUFACTURER
 
         val[COLUMN.TESTING] = (row[groupPlanColumn.TESTING1] === 'Ս' ? 1 : 0) * 3
         val[COLUMN.TESTING] += (row[groupPlanColumn.TESTING2] === 'Ս' ? 1 : 0) * 3
