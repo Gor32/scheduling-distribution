@@ -16,78 +16,20 @@ exports.getParams = function (req, res, next) {
   })
 }
 
-//BAD CODE
 exports.initParams = function (req, res, next) {
   console.log('router.post is running')
-  const param1 = createParam(utils.PARAMS.EXAMINATION)
-  param1.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
+  Params.deleteMany({},).exec()
+  const values = Object.keys(utils.PARAMS).map(function (key) {
+    return utils.PARAMS[key]
   })
-  const param2 = createParam(utils.PARAMS.TESTING)
-  param2.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
+  values.forEach(r => {
+    const param = createParam(r)
+    param.save().then(result => {
+      console.log(result)
+    }).catch(err => {
+      console.log(err)
+    })
   })
-
-  const param3 = createParam(utils.PARAMS.CONSULTATION_EXAMINATION)
-  param3.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param4 = createParam(utils.PARAMS.CONSULTATION_TESTING)
-  param4.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param5 = createParam(utils.PARAMS.COURSE_WORK)
-  param5.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param6 = createParam(utils.PARAMS.COURSE_PROJECT)
-  param6.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param7 = createParam(utils.PARAMS.PRACTICE)
-  param7.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param8 = createParam(utils.PARAMS.LAB)
-  param8.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param9 = createParam(utils.PARAMS.PRACTICAL)
-  param9.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
-  const param10 = createParam(utils.PARAMS.DIPLOMA)
-  param10.save().then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  })
-
   res.status(200).json({message: 'ok'})
 }
 
@@ -97,4 +39,27 @@ function createParam (body) {
     code: body.code,
     value: body.value,
   })
+}
+
+exports.setParams = function (req, res, next) {
+  console.log('router.post is running')
+  Params.deleteMany({},).exec()
+  const paramsBody = JSON.parse(JSON.stringify({...req.body}))
+  //console.log(paramsBody)
+  const values = Object.keys(utils.PARAMS).map(function (key) {
+    //console.log('lol-', paramsBody[utils.PARAMS[key].code])
+    return {
+      code: utils.PARAMS[key].code,
+      value: paramsBody[utils.PARAMS[key].code]
+    }
+  })
+  values.forEach(r => {
+    const param = createParam(r)
+    param.save().then(result => {
+      console.log(result)
+    }).catch(err => {
+      console.log(err)
+    })
+  })
+  res.status(200).json({message: 'ok'})
 }
