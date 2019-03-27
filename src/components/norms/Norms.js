@@ -1,12 +1,48 @@
 import React, { Component } from 'react'
-import { PARAMS, VALUES } from './norms.constants.js'
+import { PARAMS, VALUES, INPUT_PRAMS } from './norms.constants.js'
 import Fetcher from '../../lib/api'
+
+class InputNorms extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      inputKey: props.inputKey,
+      defaultValue: props.defaultValue,
+      title: props.title,
+      onSelect: props.onSelect,
+      placeholder: props.placeholder,
+      paramValue: props.paramValue
+    }
+  }
+
+  render () {
+    return (
+      <tr key={this.state.inputKey.toString() + 'tr'}>
+        <th>
+          <span>{this.state.paramValue}</span>
+        </th>
+
+        <th>
+          <input key={this.state.inputKey}
+                 defaultValue={this.state.defaultValue}
+                 onSelect={this.state.onSelect}
+                 title={this.state.title}
+                 placeholder={this.state.placeholder} />
+        </th>
+      </tr>
+    )
+  }
+}
 
 class Norms extends Component {
   constructor (props) {
     super(props)
+    const inputValues = Object.keys(INPUT_PRAMS).map(function (key) {
+      return INPUT_PRAMS[key]
+    })
     this.state = {
-      values: {...VALUES}
+      values: {...VALUES},
+      inputValues: inputValues
     }
     this.getParams()
   }
@@ -34,13 +70,19 @@ class Norms extends Component {
   }
 
   saveParams = () => {
-    console.log('save me clicked')
+    console.log('save me clicked', this.state.values)
+    Fetcher.params.setParamsRow(this.state.values)
   }
 
   render () {
     return (
       <div style={{textAlign: 'rigth'}}>
-        <button onClick={this.saveParams}>Save me</button>
+        <button onClick={this.saveParams}
+                style={{
+                  position: 'fixed',
+                  bottom: '0px',
+                  right: '0px'}}
+        >Պահպանել փոփոխությունը</button>
         <table style={{
           textAlign: 'left',
           width: '100%',
@@ -55,144 +97,18 @@ class Norms extends Component {
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <th>
-              <span>Քննություն</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.EXAMINATION}
-                     defaultValue={this.state.values[PARAMS.EXAMINATION]}
-                     onSelect={this.handledTextChange(PARAMS.EXAMINATION)}
-                     title="գործակից որը բազմապատկելով ուսանողնների քանակի վրա կստանանք ծախսված ժամանակը"
-                     placeholder="գործակից"/>
-            </th>
-          </tr>
-
-          <tr>
-            <th>
-              <span> Ստուգարք</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.TESTING}
-                     defaultValue={this.state.values[PARAMS.TESTING]}
-                     onSelect={this.handledTextChange(PARAMS.TESTING)}
-                     title="title"
-                     placeholder="գործակից"/>
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <span>Կոնսուլտացիա քննություն</span>
-            </th>
-            <th>
-              <input key={PARAMS.CONSULTATION_EXAMINATION}
-                     defaultValue={this.state.values[PARAMS.CONSULTATION_EXAMINATION]}
-                     onSelect={this.handledTextChange(PARAMS.CONSULTATION_EXAMINATION)}
-                     title=""
-                     placeholder="արժեք"/>
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <span>Կոնսուլտացիա ստուգարք</span>
-            </th>
-            <th>
-              <input key={PARAMS.CONSULTATION_TESTING}
-                     defaultValue={this.state.values[PARAMS.CONSULTATION_TESTING]}
-                     onSelect={this.handledTextChange(PARAMS.CONSULTATION_TESTING)}
-                     title=""
-                     placeholder="արժեք"/>
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <span>Կուրսային աշխատանք</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.COURSE_WORK}
-                     defaultValue={this.state.values[PARAMS.COURSE_WORK]}
-                     onSelect={this.handledTextChange(PARAMS.COURSE_WORK)}
-                     title=""
-                     placeholder="արժեք"/>
-            </th>
-          </tr>
-
-
-          <tr>
-            <th>
-              <span>Կուրսային նախագծում</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.COURSE_PROJECT}
-                     defaultValue={this.state.values[PARAMS.COURSE_PROJECT]}
-                     onSelect={this.handledTextChange(PARAMS.COURSE_PROJECT)}
-                     title=""
-                     placeholder="արժեք"/>
-            </th>
-          </tr>
-
-          <tr>
-            <th>
-              <span>Պրակտիկա</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.PRACTICE}
-                     defaultValue={this.state.values[PARAMS.PRACTICE]}
-                     onSelect={this.handledTextChange(PARAMS.PRACTICE)}
-                     title=""
-                     placeholder="շաբաթական քանի ժամ"/>
-            </th>
-          </tr>
-
-
-          <tr>
-            <th>
-              <span>Լաբեր</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.LAB}
-                     defaultValue={this.state.values[PARAMS.LAB]}
-                     onSelect={this.handledTextChange(PARAMS.LAB)}
-                     title=""
-                     placeholder="ուսանողների քանակ"/>
-            </th>
-          </tr>
-
-
-          <tr>
-            <th>
-              <span>Գործնական</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.PRACTICAL}
-                     defaultValue={this.state.values[PARAMS.PRACTICAL]}
-                     onSelect={this.handledTextChange(PARAMS.PRACTICAL)}
-                     title=""
-                     placeholder="ուսանողների քանակ"/>
-            </th>
-          </tr>
-
-
-          <tr>
-            <th>
-              <span>Դիպլոմային</span>
-            </th>
-
-            <th>
-              <input key={PARAMS.DIPLOMA}
-                     defaultValue={this.state.values[PARAMS.DIPLOMA]}
-                     onSelect={this.handledTextChange(PARAMS.DIPLOMA)}
-                     title=""
-                     placeholder="մեկ ուսանողին հասնող ժսմերը"/>
-            </th>
-          </tr>
+          {
+            this.state.inputValues.map(r => (
+              new InputNorms({
+                inputKey: r.inputKey,
+                defaultValue: this.state.values[r.inputKey],
+                onSelect: this.handledTextChange(r.inputKey),
+                title: r.title,
+                placeholder: r.placeholder,
+                paramValue: r.paramValue
+              }).render()
+            ))
+          }
           </tbody>
         </table>
       </div>
