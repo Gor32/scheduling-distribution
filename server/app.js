@@ -9,6 +9,7 @@ const subjectsRoutes = require('./api/routes/routes.subjects')
 const chairsRoutes = require('./api/routes/routes.chairs')
 const classifiersRoutes = require('./api/routes/routes.classifiers')
 const streamsRoutes = require('./api/routes/routes.streams')
+const paramsRoutes = require('./api/routes/routes.params')
 
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true})
 app.use(morgan('dev'))
@@ -33,6 +34,7 @@ app.use('/subjects', subjectsRoutes)
 app.use('/chairs', chairsRoutes)
 app.use('/classifiers', classifiersRoutes)
 app.use('/streams', streamsRoutes)
+app.use('/params', paramsRoutes)
 
 app.use((req, res, next) => {
   const error = new Error('Not found')
