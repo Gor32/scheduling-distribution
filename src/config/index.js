@@ -28,5 +28,6 @@ export const ENDPOINTS = {
 
   GET_ALL_PARAMS: `${API_PATH}/params`,
   INIT_ALL_PARAMS: `${API_PATH}/params/init`,
+  SET_ALL_PARAMS:  `${API_PATH}/params`
 }
 
