@@ -25,5 +25,8 @@ export const ENDPOINTS = {
   GET_ALL_STREAMS: `${API_PATH}/streams`,
   CREATE_STREAMS_ROW: `${API_PATH}/streams`,
   REMOVE_STREAMS_ROW: `${API_PATH}/streams`,
+
+  GET_ALL_PARAMS: `${API_PATH}/params`,
+  INIT_ALL_PARAMS: `${API_PATH}/params/init`,
 }
 
