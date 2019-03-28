@@ -48,6 +48,7 @@ class Norms extends Component {
   }
 
   getParams = () => {
+//    Fetcher.params.initParamsRow()
     Fetcher.params.getParamsRow()
       .then(res => res.json())
       .then(res => {

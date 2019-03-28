@@ -14,7 +14,7 @@ export function getColumnDefs () {
 }
 
 export async function getLoadChair (classifier) {
-  const educationalPlan = await getEducationalPlan(classifier, true)
+  const educationalPlan = await getEducationalPlan(classifier, true, true)
   const params = await Fetcher.params.getParamsRow().then(res => res.json())
   return convertToLoadChair(educationalPlan, classifier, params)
 }
@@ -83,6 +83,13 @@ function convertToLoadChair (res, classifier, parameters) {
           Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.DIPLOMA].value)
         val[COLUMN.DIPLOMA] += (row[groupPlanColumn.DIPLOMA2] === 'Դ' ? 1 : 0) *
           Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.DIPLOMA].value)
+
+        
+        val[COLUMN.PRACTICE] = (row[groupPlanColumn.PRACTICE1][0] === 'Պ' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.PRACTICE].value)
+        val[COLUMN.PRACTICE] += (row[groupPlanColumn.PRACTICE2][0] === 'Պ' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.PRACTICE].value)
+
 
         val[COLUMN.TOTAL] = val[COLUMN.PRACTICAL]
         val[COLUMN.TOTAL] += val[COLUMN.LAB]
