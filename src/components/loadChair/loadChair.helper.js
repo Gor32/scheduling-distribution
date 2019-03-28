@@ -5,6 +5,7 @@ import { COLUMN as classifierColumn } from '../classifiers/classifiers.constants
 import { getEducationalPlan } from '../groupPlan/groupPlan.helper'
 
 import Fetcher from '../../lib/api'
+import { PARAMS } from '../norms/norms.constants'
 
 const VALUE_MANUFACTURER = WEEK_MANUFACTURER * WEEK_OF_EDUCATIONAL
 
@@ -14,12 +15,19 @@ export function getColumnDefs () {
 
 export async function getLoadChair (classifier) {
   const educationalPlan = await getEducationalPlan(classifier, true)
-  return convertToLoadChair(educationalPlan, classifier)
+  const params = await Fetcher.params.getParamsRow().then(res => res.json())
+  return convertToLoadChair(educationalPlan, classifier, params)
 }
 
-function convertToLoadChair (res, classifier) {
+function convertToLoadChair (res, classifier, parameters) {
   let result = []
   let classifierGroup = []
+  const params = {}
+  parameters.forEach(r => {
+    params[r.code] = r
+  })
+  console.log(params)
+
   return Fetcher.classifiers.getClassifierGroups(classifier)
     .then(result => result.json())
     .then(r => {
@@ -37,24 +45,52 @@ function convertToLoadChair (res, classifier) {
         })[0][classifierColumn.NUMBER_OF_STUDENTS]
         if (!val[COLUMN.NUMBER_OF_STUDENTS]) {val[COLUMN.NUMBER_OF_STUDENTS] = 0}
 
-        val[COLUMN.PRACTICAL] = (row[groupPlanColumn.PRACTICAL1] + row[groupPlanColumn.PRACTICAL2]) * VALUE_MANUFACTURER
-        val[COLUMN.LAB] = (row[groupPlanColumn.LAB1] + row[groupPlanColumn.LAB2]) * VALUE_MANUFACTURER
+        val[COLUMN.PRACTICAL] = (row[groupPlanColumn.PRACTICAL1] + row[groupPlanColumn.PRACTICAL2]) * VALUE_MANUFACTURER *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] / params[PARAMS.PRACTICAL].value)
 
-        val[COLUMN.TESTING] = (row[groupPlanColumn.TESTING1] === 'Ս' ? 1 : 0) * 3
-        val[COLUMN.TESTING] += (row[groupPlanColumn.TESTING2] === 'Ս' ? 1 : 0) * 3
+        val[COLUMN.LAB] = (row[groupPlanColumn.LAB1] + row[groupPlanColumn.LAB2]) * VALUE_MANUFACTURER *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] / params[PARAMS.LAB].value)
 
-        val[COLUMN.EXAMINATION] = (row[groupPlanColumn.EXAMINATION1] === 'Ք' ? 1 : 0) * 3
-        val[COLUMN.EXAMINATION] += (row[groupPlanColumn.EXAMINATION2] === 'Ք' ? 1 : 0) * 3
+        val[COLUMN.TESTING] = (row[groupPlanColumn.TESTING1] === 'Ս' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.TESTING].value)
+        val[COLUMN.TESTING] += (row[groupPlanColumn.TESTING2] === 'Ս' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.TESTING].value)
 
-        val[COLUMN.COURSE_WORK] = (row[groupPlanColumn.COURSE1] === 'Կ' ? 1 : 0) * 3
-        val[COLUMN.COURSE_WORK] += (row[groupPlanColumn.COURSE2] === 'Կ' ? 1 : 0) * 3
-        console.log(row)
+        val[COLUMN.EXAMINATION] = (row[groupPlanColumn.EXAMINATION1] === 'Ք' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.EXAMINATION].value)
+        val[COLUMN.EXAMINATION] += (row[groupPlanColumn.EXAMINATION2] === 'Ք' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.EXAMINATION].value)
+
+        val[COLUMN.COURSE_WORK] = (row[groupPlanColumn.COURSE1] === 'ԿԱ' ? 1 : 0) *
+          val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.COURSE_WORK].value
+        val[COLUMN.COURSE_WORK] += (row[groupPlanColumn.COURSE2] === 'ԿԱ' ? 1 : 0) *
+          val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.COURSE_WORK].value
+        val[COLUMN.COURSE_WORK] = (row[groupPlanColumn.COURSE1] === 'ԿՆ' ? 1 : 0) *
+          val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.COURSE_PROJECT].value
+        val[COLUMN.COURSE_WORK] += (row[groupPlanColumn.COURSE2] === 'ԿՆ' ? 1 : 0) *
+          val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.COURSE_PROJECT].value
+
+        val[COLUMN.CONSULTATION] = (row[groupPlanColumn.EXAMINATION1] === 'Ք' ? 1 : 0) *
+          params[PARAMS.CONSULTATION_EXAMINATION].value
+        val[COLUMN.CONSULTATION] += (row[groupPlanColumn.EXAMINATION2] === 'Ք' ? 1 : 0) *
+          params[PARAMS.CONSULTATION_EXAMINATION].value
+        val[COLUMN.CONSULTATION] += (row[groupPlanColumn.TESTING1] === 'Ս' ? 1 : 0) *
+          params[PARAMS.CONSULTATION_TESTING].value
+        val[COLUMN.CONSULTATION] += (row[groupPlanColumn.TESTING2] === 'Ս' ? 1 : 0) *
+          params[PARAMS.CONSULTATION_TESTING].value
+
+        val[COLUMN.DIPLOMA] = (row[groupPlanColumn.DIPLOMA1] === 'Դ' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.DIPLOMA].value)
+        val[COLUMN.DIPLOMA] += (row[groupPlanColumn.DIPLOMA2] === 'Դ' ? 1 : 0) *
+          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.DIPLOMA].value)
 
         val[COLUMN.TOTAL] = val[COLUMN.PRACTICAL]
         val[COLUMN.TOTAL] += val[COLUMN.LAB]
         val[COLUMN.TOTAL] += val[COLUMN.TESTING]
         val[COLUMN.TOTAL] += val[COLUMN.EXAMINATION]
         val[COLUMN.TOTAL] += val[COLUMN.COURSE_WORK]
+        val[COLUMN.TOTAL] += val[COLUMN.CONSULTATION]
+        val[COLUMN.TOTAL] += val[COLUMN.DIPLOMA]
         result.push(val)
       })
       return result

@@ -19,7 +19,10 @@ export const COLUMN_INPUT = {
   TESTING2: 'testing2',
   COURSE2: 'course2',
 
-  CHAIR: 'chair'
+  CHAIR: 'chair',
+  DIPLOMA1: 'diploma1',
+  DIPLOMA2: 'diploma2',
+
 }
 
 export const COLUMN = {

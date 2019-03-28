@@ -34,9 +34,9 @@ function convertDataToGroupPlan (rows, groups, getGroupTogether) {
     results = results.concat(rows.map(row => {
       let values = {}
 
-      if (getGroupTogether){
-        values["groupLoadChair"] = group
-        values["courseLoadChair"] = course
+      if (getGroupTogether) {
+        values['groupLoadChair'] = group
+        values['courseLoadChair'] = course
       }
 
       const val = calculateSemesters(row, course)
@@ -60,6 +60,9 @@ function convertDataToGroupPlan (rows, groups, getGroupTogether) {
       values[COLUMN.SUBJECT] = row[educationalPlanConstants.COLUMN.COURSES]
       values[COLUMN.CHAIR] = row[educationalPlanConstants.COLUMN.DIGIT]
       values[COLUMN.SUBJECT_ID] = row[educationalPlanConstants.COLUMN.COURSES_ID]
+
+      values[COLUMN.DIPLOMA1] = val[COLUMN.DIPLOMA1]
+      values[COLUMN.DIPLOMA2] = val[COLUMN.DIPLOMA2]
       return values
     }).filter(validation))
   })
@@ -90,6 +93,13 @@ function validation (row) {
     return true
   }
   if (row[COLUMN.COURSE2] !== '') {
+    return true
+  }
+
+  if (row[COLUMN.DIPLOMA1] !== '') {
+    return true
+  }
+  if (row[COLUMN.DIPLOMA2] !== '') {
     return true
   }
 
@@ -142,8 +152,13 @@ function calculateSemesters (row, course) {
       values[COLUMN.TESTING1] = 'Ս'
     }
   } else {
-    if (splittingValues1.length > 0 && splittingValues1[0] !== ''){
-      values[COLUMN.COURSE1] = 'Կ'
+    if (splittingValues1.length > 0 && splittingValues1[0] !== '') {
+      if (splittingValues1[0] !== 'Դ') {
+        values[COLUMN.COURSE1] = splittingValues1[0]
+      } else {
+        values[COLUMN.DIPLOMA1] = splittingValues1[0]
+      }
+
     }
   }
 
@@ -160,8 +175,12 @@ function calculateSemesters (row, course) {
     }
   }
   else {
-    if (splittingValues2.length > 0 && splittingValues2[0] !== ''){
-      values[COLUMN.COURSE2] = 'Կ'
+    if (splittingValues2.length > 0 && splittingValues2[0] !== '') {
+      if (splittingValues2[0] !== 'Դ') {
+        values[COLUMN.COURSE2] = splittingValues2[0]
+      } else {
+        values[COLUMN.DIPLOMA2] = splittingValues2[0]
+      }
     }
   }
 
@@ -169,7 +188,12 @@ function calculateSemesters (row, course) {
 }
 
 function getSum (total, num) {
-  if (num !== 'Ք' && num !== 'Ս' && num !== 'Կ') {
+  if (num !== 'Ք' &&
+    num !== 'Ս' &&
+    num !== 'Կ' &&
+    num !== 'ԿԱ' &&
+    num !== 'ԿՆ' &&
+    num !== 'Դ') {
     return Number(total) + Number(num)
   }
   return Number(total)

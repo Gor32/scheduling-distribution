@@ -76,7 +76,7 @@ export const columnDefs = [
         field: COLUMN.PRACTICE
       },
       {
-        headerName: 'Կուրսային աշխատանքներ',
+        headerName: 'Կուրսային աշխատանք/նախագիծ',
         field: COLUMN.COURSE_WORK
       },
       {
