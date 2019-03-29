@@ -3,6 +3,7 @@ import { COLUMN, WEEK_OF_EDUCATIONAL, WEEK_MANUFACTURER } from './loadChair.cons
 import { COLUMN as groupPlanColumn } from '../groupPlan/groupPlan.constants'
 import { COLUMN as classifierColumn } from '../classifiers/classifiers.constants'
 import { getEducationalPlan } from '../groupPlan/groupPlan.helper'
+import { getStreams } from '../streams/streams.helper'
 
 import Fetcher from '../../lib/api'
 import { PARAMS } from '../norms/norms.constants'
@@ -16,17 +17,18 @@ export function getColumnDefs () {
 export async function getLoadChair (classifier) {
   const educationalPlan = await getEducationalPlan(classifier, true, true)
   const params = await Fetcher.params.getParamsRow().then(res => res.json())
-  return convertToLoadChair(educationalPlan, classifier, params)
+  const examValues =  await getExamValues2(classifier)
+  return convertToLoadChair(educationalPlan, classifier, params, examValues)
 }
-
-function convertToLoadChair (res, classifier, parameters) {
+ 
+function  convertToLoadChair (res, classifier, parameters, examValues) {
   let result = []
   let classifierGroup = []
   const params = {}
   parameters.forEach(r => {
     params[r.code] = r
   })
-  console.log(params)
+  //console.log(params)
 
   return Fetcher.classifiers.getClassifierGroups(classifier)
     .then(result => result.json())
@@ -86,23 +88,71 @@ function convertToLoadChair (res, classifier, parameters) {
 
         
         val[COLUMN.PRACTICE] = (row[groupPlanColumn.PRACTICE1][0] === 'Պ' ? 1 : 0) *
-          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.PRACTICE].value)
+          Math.ceil(Number(row[groupPlanColumn.PRACTICE1].substring(1)) * params[PARAMS.PRACTICE].value)
         val[COLUMN.PRACTICE] += (row[groupPlanColumn.PRACTICE2][0] === 'Պ' ? 1 : 0) *
-          Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.PRACTICE].value)
+          Math.ceil(Number(row[groupPlanColumn.PRACTICE2].substring(1)) * params[PARAMS.PRACTICE].value)
+          val[COLUMN.LECTURE] = 0
+        const res = getExamValues(val[COLUMN.GROUP], val[COLUMN.SUBJECT_ID], examValues)
+        val[COLUMN.TOTAL] = 0
+        if(res !== null){
+          val[COLUMN.LECTURE] = res.length
+          val[COLUMN.LECTURE] = (row[groupPlanColumn.LECTURE1] * VALUE_MANUFACTURER).toString()+ "/" + res.length.toString()
+          val[COLUMN.TOTAL] += row[groupPlanColumn.LECTURE1] * VALUE_MANUFACTURER / res.length
+          console.log(val[COLUMN.TOTAL], " " , val[COLUMN.LECTURE])
+        }
 
-
-        val[COLUMN.TOTAL] = val[COLUMN.PRACTICAL]
+        val[COLUMN.TOTAL] += val[COLUMN.PRACTICAL]
         val[COLUMN.TOTAL] += val[COLUMN.LAB]
         val[COLUMN.TOTAL] += val[COLUMN.TESTING]
         val[COLUMN.TOTAL] += val[COLUMN.EXAMINATION]
         val[COLUMN.TOTAL] += val[COLUMN.COURSE_WORK]
         val[COLUMN.TOTAL] += val[COLUMN.CONSULTATION]
         val[COLUMN.TOTAL] += val[COLUMN.DIPLOMA]
+        val[COLUMN.TOTAL] += val[COLUMN.PRACTICE]
+        // if(res !== null) {
+        //   val[COLUMN.TOTAL] = (Math.round(val[COLUMN.TOTAL]*res.length)).toString() + '/'+ res.length.toString()
+        // }
         result.push(val)
       })
       return result
     })
 }
+function  getExamValues( group, subjectId, value){
+    const values = value[subjectId]
+    let usingGroup = false
+    let usingStream = ''
+    if (values){
+      values.forEach(r=> {
+        if (r.group === group){
+          usingStream = r.stream
+          usingGroup = true
+        }
+      })
+      if (usingGroup){
+        const values2 = groupBy('stream')(values)
+        // console.log(values2)  
+        // console.log(usingStream)
+        // console.log(values2[usingStream].length)
+        return values2[usingStream]
+      }
+    }
+    return null
+}
+
+
+function  getExamValues2(classifier){
+  return getStreams(classifier).then(rowData => {
+     return  groupBy('subjectId')(rowData)
+ })
+ }
+
+
+const groupBy = key => array =>
+  array.reduce((objectsByKeyValue, obj) => {
+    const value = obj[key];
+    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+    return objectsByKeyValue;
+  }, {});
 
 function init () {
   let values = {}

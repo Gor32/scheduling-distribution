@@ -11,7 +11,9 @@ export function getColumnDefs () {
 
 export function getStreams (classifier) {
   return Fetcher.streams.getStreamsRows(classifier)
-    .then(res=>{console.log('res', res); return res;})
+    .then(res=>{
+      //console.log('res', res); 
+    return res;})
     .then(res => res.json())
     .then(res => {
       //console.log('res', res)

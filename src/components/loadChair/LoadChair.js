@@ -138,7 +138,6 @@ class LoadChair extends Component {
     const bottomData = {}
     bottomData[COLUMN.GROUP] = 'Ընդհանուր'
     bottomData[COLUMN.NUMBER_OF_STUDENTS] = this.aggregationFunction(COLUMN.NUMBER_OF_STUDENTS)
-    bottomData[COLUMN.LECTURE] = this.aggregationFunction(COLUMN.LECTURE)
     bottomData[COLUMN.PRACTICAL] = this.aggregationFunction(COLUMN.PRACTICAL)
     bottomData[COLUMN.LAB] = this.aggregationFunction(COLUMN.LAB)
     bottomData[COLUMN.CONSULTATION] = this.aggregationFunction(COLUMN.CONSULTATION)
@@ -148,6 +147,11 @@ class LoadChair extends Component {
     bottomData[COLUMN.COURSE_WORK] = this.aggregationFunction(COLUMN.COURSE_WORK)
     bottomData[COLUMN.DIPLOMA] = this.aggregationFunction(COLUMN.DIPLOMA)
     bottomData[COLUMN.TOTAL] = this.aggregationFunction(COLUMN.TOTAL)
+    bottomData[COLUMN.LECTURE] = bottomData[COLUMN.TOTAL] - bottomData[COLUMN.DIPLOMA] - 
+                                 bottomData[COLUMN.COURSE_WORK] - bottomData[COLUMN.PRACTICE] -
+                                 bottomData[COLUMN.EXAMINATION] - bottomData[COLUMN.TESTING] -
+                                 bottomData[COLUMN.CONSULTATION] - bottomData[COLUMN.LAB] -
+                                 bottomData[COLUMN.PRACTICAL] 
     this.setState({bottomData: [bottomData]})
   }
 
