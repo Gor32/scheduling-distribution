@@ -83,11 +83,12 @@ export const gridLocaleText = {
     none: 'Ոչ մեկը',
     count: 'Քանակը',
     average: 'Միջինը',
+    avg: 'Միջինը',
 
     // standard menu
     copy: 'Պատճենել',
     copyWithHeaders: 'Պատճենել վերնագրերով',
-    ctrlC: 'ctrl n C',
+    ctrlC: 'Ctrl + C',
     paste: 'Տեղադրել',
-    ctrlV: 'ctrl n V'
+    ctrlV: 'Ctrl + V'
 }

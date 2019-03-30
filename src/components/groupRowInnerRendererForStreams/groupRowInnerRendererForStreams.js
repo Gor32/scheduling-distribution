@@ -18,9 +18,9 @@ export default class GroupRowInnerRendererForStreams extends Component {
   render () {
     return (
       <div style={{display: 'inline-block'}}>
-        <span className="groupTitle"> Flow: {this.state.nodeKey}</span>
-        <span className="medal gold"> Groups count: {this.state.groupCount}</span>
-        <span className="medal silver"> Number of students in flow: {this.state.numberOfStudents}</span>
+        <span className="groupTitle"> Հոսք: {this.state.nodeKey}</span>
+        <span className="medal gold"> Խմբերի քանակը: {this.state.groupCount}</span>
+        <span className="medal silver"> Հոսքում ուսանողների քանակը: {this.state.numberOfStudents}</span>
       </div>
     )
   }

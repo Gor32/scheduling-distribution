@@ -15,7 +15,7 @@ export default class GroupRowInnerRendererForClassifiers extends Component {
   render () {
     return (
       <div style={{display: 'inline-block'}}>
-        <span className="groupTitle"> Classifier: {this.state.nodeKey}</span>
+        <span className="groupTitle"> Դասսիչ: {this.state.nodeKey}</span>
       </div>
     )
   }
