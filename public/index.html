@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./w3.css">
     <link rel="stylesheet" href="./fonts.googleapis.com.css">
@@ -8,16 +8,36 @@
     <link rel="stylesheet" href="./input.css">
     <title>React App</title>
     <style>
-      /* body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
-      body {font-size: 16px;}
-      img {margin-bottom: -8px;}
-      .mySlides {display: none;} */
-      </style>
-  </head>
-  <body >
+        /* body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+        body {font-size: 16px;}
+        img {margin-bottom: -8px;}
+        .mySlides {display: none;} */
+    </style>
+    <link rel="stylesheet/scss" type="text/css" href="slider.scss">
+    <script src="sass.min.js"></script>
+    <script>
+      (async () => {
+        const compiled = (await Promise.all(
+          [...document.querySelectorAll("link")]
+            .filter(l => l.rel === 'stylesheet/scss')
+            .map(async l => {
+              url = l.href;
+              const code = await (await fetch(url)).text();
+              const basename = url.substring(url.lastIndexOf("/")+1);
+              Sass.writeFile(basename, code);
+              return Sass.compile(`@import "${basename}"; `);
+            })
+        )).join("\n");
+        document.head.innerHTML += `<style>${compiled}</style>`;
+        console.log(compiled);
+      })();
+    </script>
+</head>
+<body>
 
-   <div id="root"></div>
-  
-  </body>
- 
+<div id="root"></div>
+
+</body>
+
+
 </html>
