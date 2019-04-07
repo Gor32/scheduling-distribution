@@ -45,7 +45,10 @@ const Indicators = (props) => {
       key={index}
       className={props.currentSlide === index ? 'active' : ''}
       onClick={() => props.changeSlide(index)}
-    >{index + 1}</li>
+      style={{color: props.currentSlide === index? 'white': 'black'}}
+    ></li>
+    // >{index + 1}</li>
+    // >{"O"}</li>
   );
   return (
     <ul className="indicators">

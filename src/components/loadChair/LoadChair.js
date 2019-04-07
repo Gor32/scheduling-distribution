@@ -146,12 +146,12 @@ class LoadChair extends Component {
     bottomData[COLUMN.PRACTICE] = this.aggregationFunction(COLUMN.PRACTICE)
     bottomData[COLUMN.COURSE_WORK] = this.aggregationFunction(COLUMN.COURSE_WORK)
     bottomData[COLUMN.DIPLOMA] = this.aggregationFunction(COLUMN.DIPLOMA)
-    bottomData[COLUMN.TOTAL] = this.aggregationFunction(COLUMN.TOTAL)
-    bottomData[COLUMN.LECTURE] = bottomData[COLUMN.TOTAL] - bottomData[COLUMN.DIPLOMA] - 
-                                 bottomData[COLUMN.COURSE_WORK] - bottomData[COLUMN.PRACTICE] -
-                                 bottomData[COLUMN.EXAMINATION] - bottomData[COLUMN.TESTING] -
-                                 bottomData[COLUMN.CONSULTATION] - bottomData[COLUMN.LAB] -
-                                 bottomData[COLUMN.PRACTICAL] 
+    bottomData[COLUMN.TOTAL] = this.totalAggregationFunction(COLUMN.TOTAL)
+    bottomData[COLUMN.LECTURE] = bottomData[COLUMN.TOTAL] - bottomData[COLUMN.DIPLOMA] -
+      bottomData[COLUMN.COURSE_WORK] - bottomData[COLUMN.PRACTICE] -
+      bottomData[COLUMN.EXAMINATION] - bottomData[COLUMN.TESTING] -
+      bottomData[COLUMN.CONSULTATION] - bottomData[COLUMN.LAB] -
+      bottomData[COLUMN.PRACTICAL]
     this.setState({bottomData: [bottomData]})
   }
 
@@ -160,6 +160,25 @@ class LoadChair extends Component {
         const res = {}
         res[column] =
           Number(x[column]) + Number(y[column])
+        return res
+      }
+    )[column]
+  }
+
+  totalAggregationFunction = (column) => {
+    return this.state.addedRow.reduce((x, y) => {
+        const res = {}
+        const value = y[column].toString().split('+')
+          .map(row => row.trim())
+          .map(row => {
+            const val = row.split('/')
+            if (val.length === 1) return Number(row)
+            return Number(val[0]) / Number(val[1])
+          })
+          .reduce((a, b) => a + b, 0)
+        console.log(value)
+        res[column] =
+          Number(x[column]) + value
         return res
       }
     )[column]

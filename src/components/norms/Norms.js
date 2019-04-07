@@ -27,7 +27,7 @@ class InputNorms extends Component {
                  defaultValue={this.state.defaultValue}
                  onSelect={this.state.onSelect}
                  title={this.state.title}
-                 placeholder={this.state.placeholder} />
+                 placeholder={this.state.placeholder}/>
         </th>
       </tr>
     )
@@ -82,8 +82,10 @@ class Norms extends Component {
                 style={{
                   position: 'fixed',
                   bottom: '0px',
-                  right: '0px'}}
-        >Պահպանել փոփոխությունը</button>
+                  right: '0px'
+                }}
+        >Պահպանել փոփոխությունը
+        </button>
         <table style={{
           textAlign: 'left',
           width: '100%',
