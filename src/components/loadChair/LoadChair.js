@@ -56,6 +56,7 @@ class LoadChair extends Component {
     this.gridApi = params.api
     params.api.sizeColumnsToFit()
     this.getClassifiers()
+    this.clearBottomData()
   }
 
   getAllRows = () => {
@@ -89,6 +90,8 @@ class LoadChair extends Component {
           .then(() => {
             if (this.state.selectedClassifier !== EMPTY) {
               this.setBottomData()
+            } else {
+              this.clearBottomData()
             }
           })
       }
@@ -116,6 +119,8 @@ class LoadChair extends Component {
         .then(() => {
           if (this.state.selectedClassifier !== EMPTY) {
             this.setBottomData()
+          } else {
+            this.clearBottomData()
           }
         })
       // helper.getEducationalPlan(this.state.selectedClassifier)
@@ -134,6 +139,22 @@ class LoadChair extends Component {
     this.setState({selectedShowZero: !this.state.selectedShowZero})
   }
 
+  clearBottomData = () => {
+    const bottomData = {}
+    bottomData[COLUMN.GROUP] = 'Ընդհանուր'
+    bottomData[COLUMN.NUMBER_OF_STUDENTS] = 0
+    bottomData[COLUMN.PRACTICAL] = 0
+    bottomData[COLUMN.LAB] = 0
+    bottomData[COLUMN.CONSULTATION] = 0
+    bottomData[COLUMN.TESTING] = 0
+    bottomData[COLUMN.EXAMINATION] = 0
+    bottomData[COLUMN.PRACTICE] = 0
+    bottomData[COLUMN.COURSE_WORK] = 0
+    bottomData[COLUMN.DIPLOMA] = 0
+    bottomData[COLUMN.TOTAL] = 0
+    bottomData[COLUMN.LECTURE] = 0
+    this.setState({bottomData: [bottomData]})
+  }
   setBottomData = () => {
     const bottomData = {}
     bottomData[COLUMN.GROUP] = 'Ընդհանուր'
@@ -172,15 +193,14 @@ class LoadChair extends Component {
           .map(row => row.trim())
           .map(row => {
             const val = row.split('/')
-            if (val.length === 1) return Number(row)
+            if (val.length === 1) return Number(val[0])
             return Number(val[0]) / Number(val[1])
           })
           .reduce((a, b) => a + b, 0)
-        console.log(value)
         res[column] =
           Number(x[column]) + value
         return res
-      }
+      },{total:0}
     )[column]
   }
 
