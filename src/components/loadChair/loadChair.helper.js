@@ -7,6 +7,7 @@ import { getStreams } from '../streams/streams.helper'
 
 import Fetcher from '../../lib/api'
 import { PARAMS } from '../norms/norms.constants'
+import { debug } from 'util';
 
 const VALUE_MANUFACTURER = WEEK_MANUFACTURER * WEEK_OF_EDUCATIONAL
 
@@ -58,6 +59,8 @@ function convertToLoadChair (res, classifier, parameters, examValues) {
         val[COLUMN.TESTING] += (row[groupPlanColumn.TESTING2] === 'Ս' ? 1 : 0) *
           Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.TESTING].value)
 
+          console.log(row[groupPlanColumn.EXAMINATION1])
+          
         val[COLUMN.EXAMINATION] = (row[groupPlanColumn.EXAMINATION1] === 'Ք' ? 1 : 0) *
           Math.ceil(val[COLUMN.NUMBER_OF_STUDENTS] * params[PARAMS.EXAMINATION].value)
         val[COLUMN.EXAMINATION] += (row[groupPlanColumn.EXAMINATION2] === 'Ք' ? 1 : 0) *
@@ -101,16 +104,19 @@ function convertToLoadChair (res, classifier, parameters, examValues) {
         val[COLUMN.TOTAL] += val[COLUMN.CONSULTATION]
         val[COLUMN.TOTAL] += val[COLUMN.DIPLOMA]
         val[COLUMN.TOTAL] += val[COLUMN.PRACTICE]
-
+        //console.log(row)
         const res = getExamValues(val[COLUMN.GROUP], val[COLUMN.SUBJECT_ID], examValues)
-
-        if (res !== null && row[groupPlanColumn.LECTURE1] !== 0 && row[groupPlanColumn.LECTURE2] !== 0) {
+        
+        if (res !== null && (row[groupPlanColumn.LECTURE1] !== 0 || row[groupPlanColumn.LECTURE2] !== 0)) {
           // val[COLUMN.LECTURE] = res.length
           val[COLUMN.LECTURE] = ((row[groupPlanColumn.LECTURE1] + row[groupPlanColumn.LECTURE2]) *
             VALUE_MANUFACTURER).toString() + '/' + res.length.toString()
           val[COLUMN.TOTAL] += ' + '+val[COLUMN.LECTURE]
           // val[COLUMN.TOTAL] += (row[groupPlanColumn.LECTURE1] + row[groupPlanColumn.LECTURE2]) * VALUE_MANUFACTURER / res.length
           // console.log(val[COLUMN.TOTAL], ' ', val[COLUMN.LECTURE])
+        }
+        else{
+          //console.log(res)
         }
 
         // if(res !== null) {
@@ -135,9 +141,9 @@ function getExamValues (group, subjectId, value) {
     })
     if (usingGroup) {
       const values2 = groupBy('stream')(values)
-      // console.log(values2)
-      // console.log(usingStream)
-      // console.log(values2[usingStream].length)
+       //console.log(values2)
+      //  console.log(usingStream)
+      //  console.log(values2[usingStream].length)
       return values2[usingStream]
     }
   }

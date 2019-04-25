@@ -64,7 +64,7 @@ function calculateSemesters (semester, newItem, column, isPlus, isAdditionalData
   if (semester == null) return 0
   const lecValues = semester.slice()
   let resSem = 0
-  for (let i of lecValues.split(':')) {
+  for (let i of lecValues.split('։')) {
     if (i === 'Q') {
       if (isAdditionalData && isPlus) {
         newItem.exam.push(column)

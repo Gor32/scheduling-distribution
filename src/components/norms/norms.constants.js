@@ -14,7 +14,7 @@ export const PARAMS = {
 export const INPUT_PRAMS = {
   EXAMINATION: {
     inputKey: PARAMS.EXAMINATION,
-    title: '',
+    title: 'Գործակից որը բազմապտկելով ուսանողների թվի հետ կլորացնելով դեպի վեր կստանանք ամբիոնի ծախսված ժամերը',
     placeholder: 'գործակից',
     paramValue: 'Քննություն',
   },

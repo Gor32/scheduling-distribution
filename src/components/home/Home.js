@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import test from '../../assets/test.png'
 import subjects from '../../assets/subjects.png'
+import a from '../../assets/a.png'
+import b from '../../assets/b.png'
+import c from '../../assets/c.png'
+import d from '../../assets/d.png'
+import e from '../../assets/e.png'
+import f from '../../assets/f.png'
+import g from '../../assets/g.png'
+import h from '../../assets/h.png'
 // class Home extends Component {
 //   render () {
 //     return (
@@ -15,20 +23,20 @@ import subjects from '../../assets/subjects.png'
 
 
 const listItems = [
-  {title: 'Ուսումնակն պլան', content: 'Break The UI Into A Component Hierarchy', image: test},
-  {title: 'Առարկաներ', content: 'Build A Static Version in React', image: subjects},
-  {title: 'Ամբիոններ', content: 'Identify The Minimal (but complete) Representation Of UI State', image: test},
-  {title: 'Հոսքեր', content: 'Identify Where Your State Should Live', image: test},
-  {title: 'Դասիչներ', content: 'Add Inverse Data Flow', image: test},
-  {title: 'Պարամետրեր', content: 'Add Inverse Data Flow', image: test},
-  {title: 'Խմբային պլան', content: 'Add Inverse Data Flow', image: test},
-  {title: 'Ամբիոնի բեռնվածք', content: 'Add Inverse Data Flow', image: test},
+  {title: 'Ուսումնակն պլան', content: 'Break The UI Into A Component Hierarchy', image: a},
+  {title: 'Առարկաներ', content: 'Build A Static Version in React', image: b},
+  {title: 'Ամբիոններ', content: 'Identify The Minimal (but complete) Representation Of UI State', image: c},
+  {title: 'Հոսքեր', content: 'Identify Where Your State Should Live', image: d},
+  {title: 'Դասիչներ', content: 'Add Inverse Data Flow', image: e},
+  {title: 'Պարամետրեր', content: 'Add Inverse Data Flow', image: f},
+  {title: 'Խմբային պլան', content: 'Add Inverse Data Flow', image: g},
+  {title: 'Ամբիոնի բեռնվածք', content: 'Add Inverse Data Flow', image: h},
 ];
 
 function SlideItem(props) {
   return (
     <div className="item-slide">
-      <h1>{props.title}</h1>
+      {/* <h1>{props.title}</h1> */}
       {/*<h2>{props.content}</h2>*/}
       <img
         src={props.image}
@@ -61,7 +69,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      slideshow: {title: 'Ուսումնակն պլան', content: 'Break The UI Into A Component Hierarchy', image: test},//props.slide,
+      slideshow: {title: 'Ուսումնակն պլան', content: 'Break The UI Into A Component Hierarchy', image: a},//props.slide,
       slideIndex: 0
     };
     this.currentIndex = 0;

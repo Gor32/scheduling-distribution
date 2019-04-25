@@ -144,20 +144,20 @@ function calculateSemesters (row, course) {
   values[COLUMN.PRACTICE1] = ''
   values[COLUMN.PRACTICE2] = ''
 
-  let splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER1].split(':')
-  let splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER2].split(':')
+  let splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER1].split('։')
+  let splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER2].split('։')
   switch (course) {
     case 2:
-      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER3].split(':')
-      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER4].split(':')
+      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER3].split('։')
+      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER4].split('։')
       break
     case 3:
-      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER5].split(':')
-      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER6].split(':')
+      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER5].split('։')
+      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER6].split('։')
       break
     case 4:
-      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER7].split(':')
-      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER8].split(':')
+      splittingValues1 = row[educationalPlanConstants.SEMESTERS.SEMESTER7].split('։')
+      splittingValues2 = row[educationalPlanConstants.SEMESTERS.SEMESTER8].split('։')
       break
     default:
   }
