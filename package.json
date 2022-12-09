@@ -39,7 +39,7 @@
     "ag-grid-enterprise": "19.0.0",
     "ag-grid-react": "19.0.0",
     "body-parser": "1.18.3",
-    "express": "4.16.4",
+    "express": "4.17.3",
     "http": "0.0.0",
     "mongoose": "5.3.7",
     "morgan": "1.9.1",
